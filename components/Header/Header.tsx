@@ -3,18 +3,21 @@ import Link from "next/link";
 
 import classes from "./Header.module.scss";
 
-const headerNav = [
+const unauthenticatedHeaderNav = [
   {
-    display: "Home",
-    path: "/",
+    display: "Sign in",
+    path: "/auth",
   },
+];
+
+const authenticatedHeaderNav = [
   {
-    display: "Your profile",
-    path: "/",
-  },
-  {
-    display: "Add place",
+    display: "Share place",
     path: "/new",
+  },
+  {
+    display: "Logout",
+    path: "/auth",
   },
 ];
 
@@ -42,11 +45,13 @@ const Header = () => {
           <Link href="/">Places</Link>
         </div>
         <ul className={classes.header__nav}>
-          {headerNav.map((e: { display: string; path: string }, i: number) => (
-            <li key={i}>
-              <Link href={e.path}>{e.display}</Link>
-            </li>
-          ))}
+          {unauthenticatedHeaderNav.map(
+            (e: { display: string; path: string }, i: number) => (
+              <li key={i}>
+                <Link href={e.path}>{e.display}</Link>
+              </li>
+            )
+          )}
         </ul>
       </div>
     </div>
