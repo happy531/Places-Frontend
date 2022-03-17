@@ -1,6 +1,77 @@
 import Head from "next/head";
 import Header from "../components/Header/Header";
 
+import { Container } from "@mui/material";
+import PlacesList from "../components/Place/PlacesList/PlacesList";
+
+const items = [
+  {
+    id: "p1",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Palace_of_Culture_and_Science_20180817.jpg/800px-Palace_of_Culture_and_Science_20180817.jpg",
+    title: "Palace of Culture",
+    description: "Great place in Warsaw!",
+    address: "plac Defilad 1",
+    creator: "u1",
+    location: {
+      lat: 52,
+      lng: 21,
+    },
+  },
+  {
+    id: "p2",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Palace_of_Culture_and_Science_20180817.jpg/800px-Palace_of_Culture_and_Science_20180817.jpg",
+    title: "Palace of Culture",
+    description: "Great place in Warsaw!",
+    address: "plac Defilad 1",
+    creator: "u1",
+    location: {
+      lat: 52,
+      lng: 21,
+    },
+  },
+  {
+    id: "p3",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Palace_of_Culture_and_Science_20180817.jpg/800px-Palace_of_Culture_and_Science_20180817.jpg",
+    title: "Palace of Culture",
+    description: "Great place in Warsaw!",
+    address: "plac Defilad 1",
+    creator: "u1",
+    location: {
+      lat: 52,
+      lng: 21,
+    },
+  },
+  {
+    id: "p4",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Palace_of_Culture_and_Science_20180817.jpg/800px-Palace_of_Culture_and_Science_20180817.jpg",
+    title: "Palace of Culture",
+    description: "Great place in Warsaw!",
+    address: "plac Defilad 1",
+    creator: "u1",
+    location: {
+      lat: 52,
+      lng: 21,
+    },
+  },
+  {
+    id: "p5",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Palace_of_Culture_and_Science_20180817.jpg/800px-Palace_of_Culture_and_Science_20180817.jpg",
+    title: "Palace of Culture",
+    description: "Great place in Warsaw!",
+    address: "plac Defilad 1",
+    creator: "u1",
+    location: {
+      lat: 52,
+      lng: 21,
+    },
+  },
+];
+
 export default function Home() {
   return (
     <>
@@ -10,7 +81,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Header />
+        <Container>
+          <Header />
+          <PlacesList items={items} />
+        </Container>
       </main>
     </>
   );

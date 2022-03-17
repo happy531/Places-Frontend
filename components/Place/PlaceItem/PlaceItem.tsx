@@ -9,37 +9,43 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 
-export default function RecipeReviewCard() {
+import IfcPlaceItem from "../../../models/IfcPlaceItem";
+
+const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
   return (
-    <Card sx={{ maxWidth: 400 }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="profile">
-            R
-          </Avatar>
-        }
-        title="User name"
-        subheader="September 14, 2016"
-      />
-      <CardMedia
-        component="img"
-        height="350"
-        image="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Palace_of_Culture_and_Science_20180817.jpg/800px-Palace_of_Culture_and_Science_20180817.jpg"
-        alt="Paella dish"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Palace of Culture
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          This impressive palace is located in Poland
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <Button size="small">view on map</Button>
-        <Button size="small">delete</Button>
-        <Button size="small">edit</Button>
-      </CardActions>
-    </Card>
+    <li style={{ marginTop: 20 }}>
+      <Card sx={{ maxWidth: 360, maxHeight: 430 }}>
+        <CardMedia
+          component="img"
+          height="300"
+          image="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Palace_of_Culture_and_Science_20180817.jpg/800px-Palace_of_Culture_and_Science_20180817.jpg"
+          alt="Paella dish"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            Palace of Culture
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            This impressive palace is located in Poland
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <Button size="medium" style={{ fontWeight: "bold" }}>
+            view on map
+          </Button>
+          <Button size="medium" style={{ fontWeight: "bold" }}>
+            visit author
+          </Button>
+          {/*<Button size="medium" style={{ fontWeight: "bold" }}>*/}
+          {/*  delete*/}
+          {/*</Button>*/}
+          {/*<Button size="medium" style={{ fontWeight: "bold" }}>*/}
+          {/*  edit*/}
+          {/*</Button>*/}
+        </CardActions>
+      </Card>
+    </li>
   );
-}
+};
+
+export default PlaceItem;
