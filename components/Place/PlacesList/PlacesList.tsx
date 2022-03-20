@@ -11,7 +11,7 @@ interface PlacesList {
 const PlacesList: React.FC<PlacesList> = ({ items }) => {
   return (
     <ul className={classes.places_list}>
-      {items.map((place) => (
+      {items.map((place: IfcPlaceItem) => (
         <PlaceItem
           key={place.id}
           id={place.id}

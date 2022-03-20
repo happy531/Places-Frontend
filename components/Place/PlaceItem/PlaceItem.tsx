@@ -11,28 +11,29 @@ import IfcPlaceItem from "../../../models/IfcPlaceItem";
 const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
   return (
     <li style={{ marginTop: 20 }}>
-      <Card sx={{ maxWidth: 360, maxHeight: 430 }}>
+      <Card sx={{ maxWidth: 360, maxHeight: 460, backgroundColor: "#1E1E1E" }}>
         <CardMedia
           component="img"
-          height="300"
+          height="320"
           image={props.image}
           alt={props.title}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="div"
+            style={{ color: "#FFFFFF" }}
+          >
             {props.title}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" style={{ color: "#757575" }}>
             {props.description}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <Button size="medium" style={{ fontWeight: "bold" }}>
-            view on map
-          </Button>
-          <Button size="medium" style={{ fontWeight: "bold" }}>
-            visit author
-          </Button>
+          <Button>view on map</Button>
+          <Button style={{ fontWeight: 500 }}>visit author</Button>
           {/*<Button size="medium" style={{ fontWeight: "bold" }}>*/}
           {/*  delete*/}
           {/*</Button>*/}
