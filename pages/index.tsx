@@ -1,9 +1,9 @@
 import Head from "next/head";
+
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-
-import { Container } from "@mui/material";
 import PlacesList from "../components/Place/PlacesList/PlacesList";
+import Introduction from "../components/Introduction/Introduction";
 
 const items = [
   {
@@ -83,6 +83,7 @@ export default function Home() {
       </Head>
       <main>
         <Header />
+        <Introduction />
         <PlacesList items={items} />
         <Footer />
       </main>
