@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from "react";
 import Link from "next/link";
+
+import CssBaseline from "@mui/material/CssBaseline";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import CameraIcon from "@mui/icons-material/PhotoCamera";
+import Typography from "@mui/material/Typography";
 
 import classes from "./Header.module.scss";
 
@@ -22,40 +27,49 @@ const authenticatedHeaderNav = [
 ];
 
 const Header = () => {
-  const [shrink, setShrink] = useState<boolean>(false);
-
-  useEffect(() => {
-    const shrinkHeader = () => {
-      if (document.documentElement.scrollTop > 100) {
-        setShrink(true);
-      } else {
-        setShrink(false);
-      }
-    };
-    window.addEventListener("scroll", shrinkHeader);
-    return () => {
-      window.removeEventListener("scroll", shrinkHeader);
-    };
-  }, []);
-
   return (
-    <div className={`${classes.header} ${shrink ? classes.shrink : ""}`}>
-      <div className={`${classes.header__wrap}`}>
-        <div className={classes.logo}>
-          <Link href="/">Places</Link>
-        </div>
-        <ul className={classes.header__nav}>
-          {unauthenticatedHeaderNav.map(
-            (e: { display: string; path: string }, i: number) => (
-              <li key={i}>
-                <Link href={e.path}>{e.display}</Link>
-              </li>
-            )
-          )}
-        </ul>
-      </div>
-    </div>
+    <>
+      <CssBaseline />
+      <AppBar>
+        <Toolbar className={`${classes.header}`}>
+          <CameraIcon sx={{ mr: 2 }} />
+          <Typography variant="h6" color="inherit" noWrap>
+            <Link href="/">Places App</Link>
+          </Typography>
+          <Typography variant="h6" color="inherit" noWrap>
+            <ul className={classes.header__nav}>
+              {unauthenticatedHeaderNav.map(
+                (e: { display: string; path: string }, i: number) => (
+                  <li key={i}>
+                    <Link href={e.path}>{e.display}</Link>
+                  </li>
+                )
+              )}
+            </ul>
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </>
   );
 };
 
 export default Header;
+//
+// return (
+//     <div className={`${classes.header} ${shrink ? classes.shrink : ""}`}>
+//       <div className={`${classes.header__wrap}`}>
+//         <div className={classes.logo}>
+//           <Link href="/">Places</Link>
+//         </div>
+//         <ul className={classes.header__nav}>
+//           {unauthenticatedHeaderNav.map(
+//               (e: { display: string; path: string }, i: number) => (
+//                   <li key={i}>
+//                     <Link href={e.path}>{e.display}</Link>
+//                   </li>
+//               )
+//           )}
+//         </ul>
+//       </div>
+//     </div>
+// );
