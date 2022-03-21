@@ -3,7 +3,7 @@
 @use "../../styles/mixin" as *;
 
 .header {
-  @include flex(space-around, unset);
+  @include flex(space-around, space-around);
   background-color: $header-color;
   position: fixed;
   top: 0;
@@ -13,9 +13,9 @@
 
   &__nav {
     @include flex(center, unset);
-
+    margin-right: 1rem;
     li {
-      padding: 5px 0;
+      padding: 10px 0;
       margin-left: 2rem;
       position: relative;
 
