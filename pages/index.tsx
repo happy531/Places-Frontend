@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 
 import { Container } from "@mui/material";
 import PlacesList from "../components/Place/PlacesList/PlacesList";
@@ -81,10 +82,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Container>
-          <Header />
-          <PlacesList items={items} />
-        </Container>
+        <Header />
+        <PlacesList items={items} />
+        <Footer />
       </main>
     </>
   );
