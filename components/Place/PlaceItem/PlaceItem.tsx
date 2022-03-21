@@ -23,18 +23,19 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
           component="img"
           sx={{
             // 16:9
-            pt: "56.25%",
+            // pt: "56.25%",
+            height: "75%",
           }}
           image={props.image}
           alt={props.title}
         />
-        <CardContent sx={{ flexGrow: 1 }}>
+        <CardContent sx={{ flexGrow: 1, height: "10%" }}>
           <Typography gutterBottom variant="h5" component="h2">
             {props.title}
           </Typography>
           <Typography>{props.description}</Typography>
         </CardContent>
-        <CardActions>
+        <CardActions sx={{ height: "10%" }}>
           <Button size="small">View</Button>
           <Button size="small">Author</Button>
         </CardActions>

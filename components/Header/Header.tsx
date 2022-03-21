@@ -32,10 +32,21 @@ const Header = () => {
       <CssBaseline />
       <AppBar>
         <Toolbar className={`${classes.header}`}>
-          <CameraIcon sx={{ mr: 2 }} />
-          <Typography variant="h6" color="inherit" noWrap>
-            <Link href="/">Places App</Link>
-          </Typography>
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              flexDirection: "row",
+              // justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CameraIcon sx={{ mr: 2 }} />
+            <Typography variant="h6" color="inherit" noWrap>
+              <Link href="/">Places App</Link>
+            </Typography>
+          </div>
           <Typography variant="h6" color="inherit" noWrap>
             <ul className={classes.header__nav}>
               {unauthenticatedHeaderNav.map(

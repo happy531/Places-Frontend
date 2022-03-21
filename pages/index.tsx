@@ -22,10 +22,10 @@ const items = [
   {
     id: "p2",
     image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Palace_of_Culture_and_Science_20180817.jpg/800px-Palace_of_Culture_and_Science_20180817.jpg",
-    title: "Palace of Culture",
-    description: "Great place in Warsaw!",
-    address: "plac Defilad 1",
+      "https://cdn.pixabay.com/photo/2019/08/07/14/29/montparnasse-tower-4390911_960_720.jpg",
+    title: "Montparnasse",
+    description: "Great place in France!",
+    address: "montparnasse",
     creator: "u1",
     location: {
       lat: 52,
