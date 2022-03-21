@@ -7,42 +7,39 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 import IfcPlaceItem from "../../../models/IfcPlaceItem";
+import Grid from "@mui/material/Grid";
 
 const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
   return (
-    <li style={{ marginTop: 20 }}>
-      <Card sx={{ maxWidth: 360, maxHeight: 460, backgroundColor: "#1E1E1E" }}>
+    <Grid item xs={12} sm={6} md={4}>
+      <Card
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <CardMedia
           component="img"
-          height="320"
+          sx={{
+            // 16:9
+            pt: "56.25%",
+          }}
           image={props.image}
           alt={props.title}
         />
-        <CardContent>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="div"
-            style={{ color: "#FFFFFF" }}
-          >
+        <CardContent sx={{ flexGrow: 1 }}>
+          <Typography gutterBottom variant="h5" component="h2">
             {props.title}
           </Typography>
-          <Typography variant="body2" style={{ color: "#757575" }}>
-            {props.description}
-          </Typography>
+          <Typography>{props.description}</Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          <Button>view on map</Button>
-          <Button style={{ fontWeight: 500 }}>visit author</Button>
-          {/*<Button size="medium" style={{ fontWeight: "bold" }}>*/}
-          {/*  delete*/}
-          {/*</Button>*/}
-          {/*<Button size="medium" style={{ fontWeight: "bold" }}>*/}
-          {/*  edit*/}
-          {/*</Button>*/}
+        <CardActions>
+          <Button size="small">View</Button>
+          <Button size="small">Author</Button>
         </CardActions>
       </Card>
-    </li>
+    </Grid>
   );
 };
 
