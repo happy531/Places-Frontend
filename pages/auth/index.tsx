@@ -9,21 +9,37 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import UploadImage from "../../components/UploadImage/UploadImage";
+import { AuthContext } from "../../context/auth-context";
+import axios from "../../axios/axios";
 
 const theme = createTheme();
 
 export default function Auth() {
+  const auth = React.useContext(AuthContext);
   const [loginMode, setLoginMode] = useState<boolean>(true);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const emailRef = useRef<HTMLInputElement>();
+  const passwordRef = useRef<HTMLInputElement>();
+
+  const authSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+    if (loginMode) {
+      try {
+        const { data } = await axios.post("/users/login", {
+          email: emailRef.current.value,
+          password: passwordRef.current.value,
+        });
+
+        auth.login(data.userId, data.token);
+
+        console.log(data);
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
   };
 
   return (
@@ -46,11 +62,12 @@ export default function Auth() {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={authSubmitHandler}
             noValidate
             sx={{ mt: 1 }}
           >
             <TextField
+              inputRef={emailRef}
               margin="normal"
               required
               fullWidth
@@ -73,6 +90,7 @@ export default function Auth() {
               />
             )}
             <TextField
+              inputRef={passwordRef}
               margin="normal"
               required
               fullWidth
@@ -83,10 +101,6 @@ export default function Auth() {
               autoComplete="current-password"
             />
             {!loginMode && <UploadImage />}
-            {/*<FormControlLabel*/}
-            {/*  control={<Checkbox value="remember" color="primary" />}*/}
-            {/*  label="Remember me"*/}
-            {/*/>*/}
             <Button
               type="submit"
               fullWidth
