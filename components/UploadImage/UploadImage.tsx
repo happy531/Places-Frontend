@@ -1,21 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 
-const UploadImage = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+interface Props {
+  selectedImage: Blob | MediaSource;
+  onSetSelectedImage: (file: File) => void;
+}
 
+const UploadImage: React.FC<Props> = ({
+  selectedImage,
+  onSetSelectedImage,
+}) => {
   return (
-    <div>
+    <>
       {selectedImage && (
         <div>
           <Image
-            alt="not fount"
+            alt="your image"
             width={"150px"}
             height={"150px"}
             src={URL.createObjectURL(selectedImage)}
           />
           <br />
-          <button onClick={() => setSelectedImage(null)}>Remove</button>
+          <button onClick={() => onSetSelectedImage(null)}>Remove</button>
         </div>
       )}
       {!selectedImage && (
@@ -24,11 +30,11 @@ const UploadImage = () => {
           name="myImage"
           onChange={(event) => {
             console.log(event.target.files[0]);
-            setSelectedImage(event.target.files[0]);
+            onSetSelectedImage(event.target.files[0]);
           }}
         />
       )}
-    </div>
+    </>
   );
 };
 

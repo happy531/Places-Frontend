@@ -22,6 +22,9 @@ export default function Auth() {
 
   const emailRef = useRef<HTMLInputElement>();
   const passwordRef = useRef<HTMLInputElement>();
+  const nameRef = useRef<HTMLInputElement>();
+
+  const [selectedImage, setSelectedImage] = useState<File>(null);
 
   const authSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,6 +42,18 @@ export default function Auth() {
       } catch (err) {
         console.log(err.message);
       }
+    } else {
+      try {
+        const formData = new FormData();
+        formData.append("email", emailRef.current.value);
+        formData.append("name", nameRef.current.value);
+        formData.append("password", passwordRef.current.value);
+        formData.append("image", selectedImage);
+
+        const { data } = await axios.post("/users/signup", formData);
+
+        auth.login(data.userId, data.token);
+      } catch (err) {}
     }
   };
 
@@ -79,6 +94,7 @@ export default function Auth() {
             />
             {!loginMode && (
               <TextField
+                inputRef={nameRef}
                 margin="normal"
                 required
                 fullWidth
@@ -100,7 +116,12 @@ export default function Auth() {
               id="password"
               autoComplete="current-password"
             />
-            {!loginMode && <UploadImage />}
+            {!loginMode && (
+              <UploadImage
+                selectedImage={selectedImage}
+                onSetSelectedImage={setSelectedImage}
+              />
+            )}
             <Button
               type="submit"
               fullWidth
