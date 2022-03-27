@@ -4,76 +4,9 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import PlacesList from "../components/Place/PlacesList/PlacesList";
 import Introduction from "../components/Introduction/Introduction";
+import axios from "../axios/axios";
 
-const items = [
-  {
-    id: "p1",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Palace_of_Culture_and_Science_20180817.jpg/800px-Palace_of_Culture_and_Science_20180817.jpg",
-    title: "Palace of Culture",
-    description: "Great place in Warsaw!",
-    address: "plac Defilad 1",
-    creator: "u1",
-    location: {
-      lat: 52,
-      lng: 21,
-    },
-  },
-  {
-    id: "p2",
-    image:
-      "https://cdn.pixabay.com/photo/2019/08/07/14/29/montparnasse-tower-4390911_960_720.jpg",
-    title: "Montparnasse",
-    description: "Great place in France!",
-    address: "montparnasse",
-    creator: "u1",
-    location: {
-      lat: 52,
-      lng: 21,
-    },
-  },
-  {
-    id: "p3",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Palace_of_Culture_and_Science_20180817.jpg/800px-Palace_of_Culture_and_Science_20180817.jpg",
-    title: "Palace of Culture",
-    description: "Great place in Warsaw!",
-    address: "plac Defilad 1",
-    creator: "u1",
-    location: {
-      lat: 52,
-      lng: 21,
-    },
-  },
-  {
-    id: "p4",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Palace_of_Culture_and_Science_20180817.jpg/800px-Palace_of_Culture_and_Science_20180817.jpg",
-    title: "Palace of Culture",
-    description: "Great place in Warsaw!",
-    address: "plac Defilad 1",
-    creator: "u1",
-    location: {
-      lat: 52,
-      lng: 21,
-    },
-  },
-  {
-    id: "p5",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Palace_of_Culture_and_Science_20180817.jpg/800px-Palace_of_Culture_and_Science_20180817.jpg",
-    title: "Palace of Culture",
-    description: "Great place in Warsaw!",
-    address: "plac Defilad 1",
-    creator: "u1",
-    location: {
-      lat: 52,
-      lng: 21,
-    },
-  },
-];
-
-export default function Home() {
+export default function Home({ items }) {
   return (
     <>
       <Head>
@@ -89,4 +22,12 @@ export default function Home() {
       </main>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const { data } = await axios.get("/places");
+
+  return {
+    props: { items: data.places },
+  };
 }
