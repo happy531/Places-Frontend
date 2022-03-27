@@ -1,11 +1,36 @@
-import React, { useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Container } from "@mui/material";
+import { Container, Button } from "@mui/material";
 import UploadImage from "../../components/UploadImage/UploadImage";
+import axios from "../../axios/axios";
+import { AuthContext } from "../../context/auth-context";
 
 export default function New() {
+  const { token } = useContext(AuthContext);
+
   const [selectedImage, setSelectedImage] = useState<File>(null);
+
+  const titleRef = useRef<HTMLInputElement>();
+  const descriptionRef = useRef<HTMLInputElement>();
+  const addressRef = useRef<HTMLInputElement>();
+
+  const placeSubmitHandler = async (event) => {
+    event.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("title", titleRef.current.value);
+      formData.append("description", descriptionRef.current.value);
+      formData.append("address", addressRef.current.value);
+      formData.append("image", selectedImage);
+
+      await axios.post("/places", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (err) {}
+  };
 
   return (
     <Container
@@ -16,6 +41,8 @@ export default function New() {
       }}
     >
       <Box
+        component="form"
+        onSubmit={placeSubmitHandler}
         sx={{
           width: 500,
           marginTop: 15,
@@ -31,6 +58,7 @@ export default function New() {
           onSetSelectedImage={setSelectedImage}
         />
         <TextField
+          inputRef={titleRef}
           margin="normal"
           required
           fullWidth
@@ -39,6 +67,7 @@ export default function New() {
           name="title"
         />
         <TextField
+          inputRef={descriptionRef}
           margin="normal"
           required
           fullWidth
@@ -47,6 +76,7 @@ export default function New() {
           name="description"
         />
         <TextField
+          inputRef={addressRef}
           margin="normal"
           required
           fullWidth
@@ -54,6 +84,9 @@ export default function New() {
           label="Address"
           name="address"
         />
+        <Button variant="contained" type="submit" fullWidth>
+          POST
+        </Button>
       </Box>
     </Container>
   );
