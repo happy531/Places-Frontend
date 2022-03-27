@@ -11,7 +11,14 @@ interface Props {
 const PlacesList: React.FC<Props> = ({ items }) => {
   return (
     <Container sx={{ py: 8 }} maxWidth="md">
-      <Grid container spacing={4}>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        sx={{ minHeight: "80vh" }}
+      >
         {items.map((place: IfcPlaceItem) => (
           <PlaceItem
             key={place.id}
