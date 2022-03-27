@@ -8,15 +8,14 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   z-index: 99;
 
   &__nav {
     @include flex(center, unset);
-    margin-right: 1rem;
     li {
       padding: 10px 0;
-      margin-left: 2rem;
+      margin-left: 1.5rem;
       position: relative;
 
       &::after {

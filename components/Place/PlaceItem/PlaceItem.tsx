@@ -9,12 +9,31 @@ import Button from "@mui/material/Button";
 import IfcPlaceItem from "../../../models/IfcPlaceItem";
 import Grid from "@mui/material/Grid";
 import { useRouter } from "next/router";
+import { useAuth } from "../../../hooks/auth-hook";
+import axios from "../../../axios/axios";
 
 const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
   const router = useRouter();
+  const { userId, token } = useAuth();
 
-  const visitAuthorProfileHandler = async () => {
+  const isProfileOwner = props.creator === userId;
+
+  const handleVisitAuthorProfile = async () => {
     await router.push(`/user/${props.creator}`);
+  };
+
+  const handleDeletePlace = async () => {
+    try {
+      await axios.delete(`/places/${props.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (err) {}
+  };
+
+  const handleEditPlace = async () => {
+    await router.push(`/place/${props.id}`);
   };
 
   return (
@@ -22,6 +41,7 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
       <Card
         sx={{
           width: 600,
+          marginTop: 10,
           minHeight: "100%",
           display: "flex",
           flexDirection: "column",
@@ -43,9 +63,21 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
         </CardContent>
         <CardActions sx={{ height: "10%" }}>
           <Button size="small">View</Button>
-          <Button size="small" onClick={visitAuthorProfileHandler}>
-            Author
-          </Button>
+          {!router.query.userId && (
+            <Button size="small" onClick={handleVisitAuthorProfile}>
+              Author
+            </Button>
+          )}
+          {isProfileOwner && (
+            <Button size="small" onClick={handleDeletePlace}>
+              Delete
+            </Button>
+          )}
+          {isProfileOwner && (
+            <Button size="small" onClick={handleEditPlace}>
+              Edit
+            </Button>
+          )}
         </CardActions>
       </Card>
     </Grid>
