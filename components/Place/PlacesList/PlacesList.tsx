@@ -19,7 +19,7 @@ const PlacesList: React.FC<Props> = ({ items }) => {
         justifyContent="center"
         sx={{ minHeight: "80vh" }}
       >
-        {items.map((place: IfcPlaceItem) => (
+        {items.reverse().map((place: IfcPlaceItem) => (
           <PlaceItem
             key={place.id}
             id={place.id}

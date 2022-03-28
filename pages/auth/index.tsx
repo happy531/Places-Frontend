@@ -49,7 +49,7 @@ export default function Auth() {
         formData.append("name", nameRef.current.value);
         formData.append("password", passwordRef.current.value);
         formData.append("image", selectedImage);
-
+        console.log(formData);
         const { data } = await axios.post("/users/signup", formData);
 
         auth.login(data.userId, data.token);

@@ -25,7 +25,7 @@ const UserShowcase: React.FC<Props> = ({ name, image }) => {
     >
       <Avatar
         alt={name}
-        src={`http://localhost:5000/${image}`}
+        src={`${process.env.NEXT_PUBLIC_BACKEND_ASSET_URL}/${image}`}
         sx={{ width: 100, height: 100, border: "1px solid black" }}
       />
       <h2>{name}</h2>

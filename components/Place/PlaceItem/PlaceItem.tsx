@@ -52,7 +52,7 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
           sx={{
             height: "70%",
           }}
-          image={`http://localhost:5000/${props.image}`}
+          image={`${process.env.NEXT_PUBLIC_BACKEND_ASSET_URL}/${props.image}`}
           alt={props.title}
         />
         <CardContent sx={{ flexGrow: 1 }}>
