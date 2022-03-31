@@ -12,6 +12,7 @@ import { useRef, useState } from "react";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { AuthContext } from "../../context/auth-context";
 import axios from "../../axios/axios";
+import { router } from "next/client";
 
 export default function Auth() {
   const auth = React.useContext(AuthContext);
@@ -36,6 +37,8 @@ export default function Auth() {
         auth.login(data.userId, data.token);
 
         console.log(data);
+
+        await router.push("/");
       } catch (err) {
         console.log(err.message);
       }
@@ -50,6 +53,8 @@ export default function Auth() {
         const { data } = await axios.post("/users/signup", formData);
 
         auth.login(data.userId, data.token);
+
+        await router.push("/");
       } catch (err) {}
     }
   };

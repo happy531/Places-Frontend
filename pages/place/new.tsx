@@ -6,8 +6,10 @@ import UploadImage from "../../components/UploadImage/UploadImage";
 import axios from "../../axios/axios";
 import { AuthContext } from "../../context/auth-context";
 import Header from "../../components/Header/Header";
+import { useRouter } from "next/router";
 
 export default function New() {
+  const router = useRouter();
   const { token } = useContext(AuthContext);
 
   const [selectedImage, setSelectedImage] = useState<File>(null);
@@ -25,11 +27,13 @@ export default function New() {
       formData.append("address", addressRef.current.value);
       formData.append("image", selectedImage);
 
-      await axios.post("/places", formData, {
+      const { data } = await axios.post("/places", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      if (data) await router.push("/");
     } catch (err) {}
   };
 
