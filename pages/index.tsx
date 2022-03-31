@@ -7,7 +7,7 @@ import Introduction from "../components/Introduction/Introduction";
 import axios from "../axios/axios";
 import { GetServerSideProps } from "next";
 
-export default function Home({ items }) {
+export default function Home({ placesData }) {
   return (
     <>
       <Head>
@@ -18,7 +18,20 @@ export default function Home({ items }) {
       <main>
         <Header />
         <Introduction />
-        {items ? <PlacesList items={items} /> : <p>No places found.</p>}
+        {placesData.places ? (
+          <PlacesList items={placesData.places} />
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "50vh",
+            }}
+          >
+            {placesData.message}
+          </div>
+        )}
         <Footer />
       </main>
     </>
@@ -26,9 +39,14 @@ export default function Home({ items }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await axios.get("/places");
+  // const { data } = await axios.get("/places");
+
+  const res = await fetch(
+    `https://places-backend-nodejs.herokuapp.com/api/places`
+  );
+  const placesData = await res.json();
 
   return {
-    props: { items: data.places },
+    props: { placesData },
   };
 };

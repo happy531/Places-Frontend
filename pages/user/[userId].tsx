@@ -7,7 +7,7 @@ import axios from "../../axios/axios";
 import UserShowcase from "../../components/User/UserShowcase";
 import { GetServerSideProps } from "next";
 
-export default function UserProfile({ items, user }) {
+export default function UserProfile({ user, placesData }) {
   return (
     <>
       <Head>
@@ -17,7 +17,20 @@ export default function UserProfile({ items, user }) {
       <main>
         <Header />
         <UserShowcase name={user.name} image={user.image} />
-        <PlacesList items={items} />
+        {placesData.places ? (
+          <PlacesList items={placesData.places} />
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "50vh",
+            }}
+          >
+            {placesData.message}
+          </div>
+        )}
         <Footer />
       </main>
     </>
@@ -25,10 +38,15 @@ export default function UserProfile({ items, user }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const { data: placeData } = await axios.get(`/places/user/${params.userId}`);
+  // const { data } = await axios.get(`/places/user/${params.userId}`);
+
+  const res = await fetch(
+    `https://places-backend-nodejs.herokuapp.com/api/places/user/${params.userId}`
+  );
+  const placesData = await res.json();
 
   const { data: userData } = await axios.get(`/users/${params.userId}`);
   return {
-    props: { items: placeData.places, user: userData.user },
+    props: { user: userData.user, placesData },
   };
 };
