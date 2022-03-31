@@ -31,7 +31,7 @@ export default function Footer() {
         Make sure you visit{" "}
         <Link
           color="inherit"
-          href="https://www.linkedin.com/in/j%C4%99drzej-weso%C5%82owski-2455941a4/"
+          href="https://github.com/happy531/Places-Frontend"
         >
           Github
         </Link>{" "}

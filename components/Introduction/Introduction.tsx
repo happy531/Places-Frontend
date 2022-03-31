@@ -41,8 +41,24 @@ const Introduction = () => {
           spacing={2}
           justifyContent="center"
         >
-          <Button variant="contained">Visit my Linkedin</Button>
-          <Button variant="outlined">Visit my Github</Button>
+          <Button
+            variant="contained"
+            onClick={() => {
+              window.open(
+                "https://www.linkedin.com/in/j%C4%99drzej-weso%C5%82owski-2455941a4/"
+              );
+            }}
+          >
+            Visit my Linkedin
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              window.open("https://github.com/happy531");
+            }}
+          >
+            Visit my Github
+          </Button>
         </Stack>
       </Container>
     </Box>
