@@ -5,6 +5,7 @@ import Footer from "../components/Footer/Footer";
 import PlacesList from "../components/Place/PlacesList/PlacesList";
 import Introduction from "../components/Introduction/Introduction";
 import axios from "../axios/axios";
+import { GetServerSideProps } from "next";
 
 export default function Home({ items }) {
   return (
@@ -17,17 +18,17 @@ export default function Home({ items }) {
       <main>
         <Header />
         <Introduction />
-        <PlacesList items={items} />
+        {items ? <PlacesList items={items} /> : <p>No places found.</p>}
         <Footer />
       </main>
     </>
   );
 }
 
-export async function getStaticProps() {
+export const getServerSideProps: GetServerSideProps = async () => {
   const { data } = await axios.get("/places");
 
   return {
     props: { items: data.places },
   };
-}
+};
