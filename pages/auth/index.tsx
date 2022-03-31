@@ -12,10 +12,12 @@ import { useRef, useState } from "react";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { AuthContext } from "../../context/auth-context";
 import axios from "../../axios/axios";
-import { router } from "next/client";
+import { useRouter } from "next/router";
 
 export default function Auth() {
+  const router = useRouter();
   const auth = React.useContext(AuthContext);
+
   const [loginMode, setLoginMode] = useState<boolean>(true);
 
   const emailRef = useRef<HTMLInputElement>();
