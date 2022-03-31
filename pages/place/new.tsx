@@ -5,6 +5,7 @@ import { Container, Button } from "@mui/material";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import axios from "../../axios/axios";
 import { AuthContext } from "../../context/auth-context";
+import Header from "../../components/Header/Header";
 
 export default function New() {
   const { token } = useContext(AuthContext);
@@ -33,61 +34,64 @@ export default function New() {
   };
 
   return (
-    <Container
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <Box
-        component="form"
-        onSubmit={placeSubmitHandler}
+    <>
+      <Header />
+      <Container
         sx={{
-          width: 500,
-          marginTop: 15,
-          maxWidth: "100%",
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
           flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        <UploadImage
-          selectedImage={selectedImage}
-          onSetSelectedImage={setSelectedImage}
-        />
-        <TextField
-          inputRef={titleRef}
-          margin="normal"
-          required
-          fullWidth
-          id="title"
-          label="Title"
-          name="title"
-        />
-        <TextField
-          inputRef={descriptionRef}
-          margin="normal"
-          required
-          fullWidth
-          id="description"
-          label="Description"
-          name="description"
-        />
-        <TextField
-          inputRef={addressRef}
-          margin="normal"
-          required
-          fullWidth
-          id="address"
-          label="Address"
-          name="address"
-        />
-        <Button variant="contained" type="submit" fullWidth>
-          POST
-        </Button>
-      </Box>
-    </Container>
+        <Box
+          component="form"
+          onSubmit={placeSubmitHandler}
+          sx={{
+            width: 500,
+            marginTop: 15,
+            maxWidth: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <TextField
+            inputRef={titleRef}
+            margin="normal"
+            required
+            fullWidth
+            id="title"
+            label="Title"
+            name="title"
+          />
+          <TextField
+            inputRef={descriptionRef}
+            margin="normal"
+            required
+            fullWidth
+            id="description"
+            label="Description"
+            name="description"
+          />
+          <UploadImage
+            selectedImage={selectedImage}
+            onSetSelectedImage={setSelectedImage}
+          />
+          <TextField
+            inputRef={addressRef}
+            margin="normal"
+            required
+            fullWidth
+            id="address"
+            label="Address"
+            name="address"
+          />
+          <Button variant="contained" type="submit" fullWidth>
+            POST
+          </Button>
+        </Box>
+      </Container>
+    </>
   );
 }
