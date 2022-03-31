@@ -6,6 +6,7 @@ import PlacesList from "../../components/Place/PlacesList/PlacesList";
 import axios from "../../axios/axios";
 import UserShowcase from "../../components/User/UserShowcase";
 import { GetServerSideProps } from "next";
+import PlaceError from "../../components/UI/PlaceError/PlaceError";
 
 export default function UserProfile({ user, placesData }) {
   return (
@@ -20,16 +21,7 @@ export default function UserProfile({ user, placesData }) {
         {placesData.places ? (
           <PlacesList items={placesData.places} />
         ) : (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              minHeight: "50vh",
-            }}
-          >
-            {placesData.message}
-          </div>
+          <PlaceError message={placesData.message} />
         )}
         <Footer />
       </main>
