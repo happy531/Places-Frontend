@@ -1,7 +1,6 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -9,10 +8,12 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useRef, useState } from "react";
-import UploadImage from "../../components/UploadImage/UploadImage";
+import UploadImage from "../../components/UI/UploadImage/UploadImage";
 import { AuthContext } from "../../context/auth-context";
 import axios from "../../axios/axios";
 import { useRouter } from "next/router";
+import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
+import Header from "../../components/Header/Header";
 
 export default function Auth() {
   const router = useRouter();
@@ -25,12 +26,15 @@ export default function Auth() {
   const nameRef = useRef<HTMLInputElement>();
 
   const [selectedImage, setSelectedImage] = useState<File>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const authSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (loginMode) {
       try {
+        setLoading(true);
+
         const { data } = await axios.post("/users/login", {
           email: emailRef.current.value,
           password: passwordRef.current.value,
@@ -41,11 +45,16 @@ export default function Auth() {
         console.log(data);
 
         await router.push("/");
+
+        setLoading(false);
       } catch (err) {
         console.log(err.message);
+        setLoading(false);
       }
     } else {
       try {
+        setLoading(true);
+
         const formData = new FormData();
         formData.append("email", emailRef.current.value);
         formData.append("name", nameRef.current.value);
@@ -57,105 +66,123 @@ export default function Auth() {
         auth.login(data.userId, data.token);
 
         await router.push("/");
-      } catch (err) {}
+
+        setLoading(false);
+      } catch (err) {
+        console.log(err.message);
+        setLoading(false);
+      }
     }
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          {loginMode ? "Sign in" : "Sign up"}
-        </Typography>
+    <>
+      <Header />
+      <Container component="main" maxWidth="xs">
         <Box
-          component="form"
-          onSubmit={authSubmitHandler}
-          noValidate
-          sx={{ mt: 1 }}
+          sx={{
+            width: 400,
+            marginTop: 5,
+            maxWidth: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          <TextField
-            inputRef={emailRef}
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          {!loginMode && (
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            {loginMode ? "Sign in" : "Sign up"}
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={authSubmitHandler}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
-              inputRef={nameRef}
+              inputRef={emailRef}
               margin="normal"
               required
               fullWidth
-              id="name"
-              label="name"
-              name="name"
-              autoComplete="name"
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
               autoFocus
             />
-          )}
-          <TextField
-            inputRef={passwordRef}
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          {!loginMode && (
-            <UploadImage
-              selectedImage={selectedImage}
-              onSetSelectedImage={setSelectedImage}
+            {!loginMode && (
+              <TextField
+                inputRef={nameRef}
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="name"
+                name="name"
+                autoComplete="name"
+                autoFocus
+              />
+            )}
+            <TextField
+              inputRef={passwordRef}
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
             />
-          )}
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            {loginMode ? "Sign in" : "Sign up"}
-          </Button>
-          <Grid container>
-            <Grid item>
-              {loginMode ? (
+            {!loginMode && (
+              <UploadImage
+                selectedImage={selectedImage}
+                onSetSelectedImage={setSelectedImage}
+                width={400}
+                height={300}
+              />
+            )}
+            {!loading ? (
+              <>
                 <Button
-                  onClick={() => {
-                    setLoginMode(false);
-                  }}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
                 >
-                  {"Don't have an account? Sign Up"}
+                  {loginMode ? "Sign in" : "Sign up"}
                 </Button>
-              ) : (
-                <Button
-                  onClick={() => {
-                    setLoginMode(true);
-                  }}
-                >
-                  {"Already have an account? Sign In"}
-                </Button>
-              )}
-            </Grid>
-          </Grid>
+                <Grid container>
+                  <Grid item>
+                    {loginMode ? (
+                      <Button
+                        onClick={() => {
+                          setLoginMode(false);
+                        }}
+                      >
+                        {"Don't have an account? Sign Up"}
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          setLoginMode(true);
+                        }}
+                      >
+                        {"Already have an account? Sign In"}
+                      </Button>
+                    )}
+                  </Grid>
+                </Grid>
+              </>
+            ) : (
+              <LoadingSpinner />
+            )}
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </>
   );
 }

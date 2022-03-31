@@ -2,17 +2,19 @@ import React, { useContext, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Container, Button } from "@mui/material";
-import UploadImage from "../../components/UploadImage/UploadImage";
+import UploadImage from "../../components/UI/UploadImage/UploadImage";
 import axios from "../../axios/axios";
 import { AuthContext } from "../../context/auth-context";
 import Header from "../../components/Header/Header";
 import { useRouter } from "next/router";
+import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 
 export default function New() {
   const router = useRouter();
   const { token } = useContext(AuthContext);
 
   const [selectedImage, setSelectedImage] = useState<File>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const titleRef = useRef<HTMLInputElement>();
   const descriptionRef = useRef<HTMLInputElement>();
@@ -21,6 +23,8 @@ export default function New() {
   const placeSubmitHandler = async (event) => {
     event.preventDefault();
     try {
+      setLoading(true);
+
       const formData = new FormData();
       formData.append("title", titleRef.current.value);
       formData.append("description", descriptionRef.current.value);
@@ -34,7 +38,12 @@ export default function New() {
       });
 
       if (data) await router.push("/");
-    } catch (err) {}
+
+      setLoading(false);
+    } catch (err) {
+      console.log(err.message);
+      setLoading(false);
+    }
   };
 
   return (
@@ -55,9 +64,9 @@ export default function New() {
             marginTop: 15,
             maxWidth: "100%",
             display: "flex",
+            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            flexDirection: "column",
           }}
         >
           <TextField
@@ -81,6 +90,8 @@ export default function New() {
           <UploadImage
             selectedImage={selectedImage}
             onSetSelectedImage={setSelectedImage}
+            width={500}
+            height={400}
           />
           <TextField
             inputRef={addressRef}
@@ -91,9 +102,13 @@ export default function New() {
             label="Address"
             name="address"
           />
-          <Button variant="contained" type="submit" fullWidth>
-            POST
-          </Button>
+          {!loading ? (
+            <Button variant="contained" type="submit" fullWidth>
+              POST
+            </Button>
+          ) : (
+            <LoadingSpinner />
+          )}
         </Box>
       </Container>
     </>
