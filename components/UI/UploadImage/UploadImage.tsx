@@ -6,11 +6,15 @@ import { CardContent, Fab, Grid } from "@mui/material";
 interface Props {
   selectedImage: Blob | MediaSource;
   onSetSelectedImage: (file: File) => void;
+  width: number;
+  height: number;
 }
 
 const UploadImage: React.FC<Props> = ({
   selectedImage,
   onSetSelectedImage,
+  width,
+  height,
 }) => {
   return (
     <>
@@ -18,15 +22,18 @@ const UploadImage: React.FC<Props> = ({
         <div
           style={{
             borderRadius: "10px",
-            width: 500,
-            height: 400,
+            width: "100%",
+            height: height,
             overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <Image
             alt="your image"
-            width={500}
-            height={400}
+            width={width}
+            height={height}
             src={URL.createObjectURL(selectedImage)}
             onClick={() => onSetSelectedImage(null)}
           />
@@ -35,7 +42,14 @@ const UploadImage: React.FC<Props> = ({
       {!selectedImage && (
         <>
           <CardContent>
-            <Grid container>
+            <Grid
+              container
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <input
                 accept="image/*"
                 style={{ display: "none" }}
