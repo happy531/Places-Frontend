@@ -1,33 +1,36 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { useRef, useState } from "react";
-import UploadImage from "../../components/UI/UploadImage/UploadImage";
+import React, { useContext, useRef, useState } from "react";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { AuthContext } from "../../context/auth-context";
 import axios from "../../axios/axios";
-import { useRouter } from "next/router";
-import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
+
+import {
+  Avatar,
+  Button,
+  TextField,
+  Grid,
+  Box,
+  Typography,
+  Container,
+} from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+
 import Header from "../../components/Header/Header";
-import Head from "next/head";
+import UploadImage from "../../components/UI/UploadImage/UploadImage";
+import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 
 export default function Auth() {
   const router = useRouter();
-  const auth = React.useContext(AuthContext);
+  const auth = useContext(AuthContext);
 
   const [loginMode, setLoginMode] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const emailRef = useRef<HTMLInputElement>();
   const passwordRef = useRef<HTMLInputElement>();
   const nameRef = useRef<HTMLInputElement>();
-
   const [selectedImage, setSelectedImage] = useState<File>(null);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const authSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -110,8 +113,8 @@ export default function Auth() {
             >
               <TextField
                 inputRef={emailRef}
-                // error={}
-                // helperText="Incorrect email address."
+                // error={!emailIsValid}
+                // helperText={!emailIsValid && "Incorrect email address."}
                 margin="normal"
                 required
                 fullWidth
@@ -136,6 +139,10 @@ export default function Auth() {
               )}
               <TextField
                 inputRef={passwordRef}
+                // error={!passwordIsValid}
+                // helperText={
+                //   !passwordIsValid && "Password must be at least 5 characters."
+                // }
                 margin="normal"
                 required
                 fullWidth
