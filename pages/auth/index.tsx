@@ -14,6 +14,7 @@ import axios from "../../axios/axios";
 import { useRouter } from "next/router";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 import Header from "../../components/Header/Header";
+import Head from "next/head";
 
 export default function Auth() {
   const router = useRouter();
@@ -69,7 +70,6 @@ export default function Auth() {
 
         setLoading(false);
       } catch (err) {
-        console.log(err.message);
         setLoading(false);
       }
     }
@@ -77,112 +77,121 @@ export default function Auth() {
 
   return (
     <>
-      <Header />
-      <Container component="main" maxWidth="xs">
-        <Box
-          sx={{
-            width: 400,
-            marginTop: 5,
-            maxWidth: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            {loginMode ? "Sign in" : "Sign up"}
-          </Typography>
+      <Head>
+        <title>Places - Auth</title>
+        <meta name="places auth" content="places auth page" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <>
+        <Header />
+        <Container component="main" maxWidth="xs">
           <Box
-            component="form"
-            onSubmit={authSubmitHandler}
-            noValidate
-            sx={{ mt: 1 }}
+            sx={{
+              width: 400,
+              marginTop: 5,
+              maxWidth: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            <TextField
-              inputRef={emailRef}
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            {!loginMode && (
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              {loginMode ? "Sign in" : "Sign up"}
+            </Typography>
+            <Box
+              component="form"
+              onSubmit={authSubmitHandler}
+              noValidate
+              sx={{ mt: 1 }}
+            >
               <TextField
-                inputRef={nameRef}
+                inputRef={emailRef}
+                // error={}
+                // helperText="Incorrect email address."
                 margin="normal"
                 required
                 fullWidth
-                id="name"
-                label="name"
-                name="name"
-                autoComplete="name"
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
                 autoFocus
               />
-            )}
-            <TextField
-              inputRef={passwordRef}
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            {!loginMode && (
-              <UploadImage
-                selectedImage={selectedImage}
-                onSetSelectedImage={setSelectedImage}
-                width={400}
-                height={300}
-              />
-            )}
-            {!loading ? (
-              <>
-                <Button
-                  type="submit"
+              {!loginMode && (
+                <TextField
+                  inputRef={nameRef}
+                  margin="normal"
+                  required
                   fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  {loginMode ? "Sign in" : "Sign up"}
-                </Button>
-                <Grid container>
-                  <Grid item>
-                    {loginMode ? (
-                      <Button
-                        onClick={() => {
-                          setLoginMode(false);
-                        }}
-                      >
-                        {"Don't have an account? Sign Up"}
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => {
-                          setLoginMode(true);
-                        }}
-                      >
-                        {"Already have an account? Sign In"}
-                      </Button>
-                    )}
+                  id="name"
+                  label="name"
+                  name="name"
+                  autoComplete="name"
+                  autoFocus
+                />
+              )}
+              <TextField
+                inputRef={passwordRef}
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              {!loginMode && (
+                <UploadImage
+                  selectedImage={selectedImage}
+                  onSetSelectedImage={setSelectedImage}
+                  width={300}
+                  height={200}
+                />
+              )}
+              {!loading ? (
+                <>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    {loginMode ? "Sign in" : "Sign up"}
+                  </Button>
+                  <Grid container>
+                    <Grid item>
+                      {loginMode ? (
+                        <Button
+                          onClick={() => {
+                            setLoginMode(false);
+                          }}
+                        >
+                          {"Don't have an account? Sign Up"}
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() => {
+                            setLoginMode(true);
+                          }}
+                        >
+                          {"Already have an account? Sign In"}
+                        </Button>
+                      )}
+                    </Grid>
                   </Grid>
-                </Grid>
-              </>
-            ) : (
-              <LoadingSpinner />
-            )}
+                </>
+              ) : (
+                <LoadingSpinner />
+              )}
+            </Box>
           </Box>
-        </Box>
-      </Container>
+        </Container>
+      </>
     </>
   );
 }

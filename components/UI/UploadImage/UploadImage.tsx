@@ -22,12 +22,11 @@ const UploadImage: React.FC<Props> = ({
         <div
           style={{
             borderRadius: "10px",
-            width: "100%",
+            width: width,
             height: height,
+            marginLeft: "auto",
+            marginRight: "auto",
             overflow: "hidden",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
           }}
         >
           <Image
