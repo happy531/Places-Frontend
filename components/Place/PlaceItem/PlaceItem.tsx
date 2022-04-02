@@ -17,6 +17,7 @@ import IfcPlaceItem from "../../../models/IfcPlaceItem";
 
 import classes from "./PlaceItem.module.scss";
 import ConfirmDeleteModal from "../../UI/Modals/ConfirmDeleteModal";
+import EditPlaceModal from "../../UI/Modals/EditPlaceModal";
 
 const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
   const router = useRouter();
@@ -33,9 +34,17 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
   const handleOpenDeleteModal = () => {
     setOpenDeleteModal(true);
   };
-
   const handleCloseDeleteModal = () => {
     setOpenDeleteModal(false);
+  };
+
+  //edit modal
+  const [openEditModal, setOpenEditModal] = useState<boolean>(false);
+  const handleOpenEditModal = () => {
+    setOpenEditModal(true);
+  };
+  const handleCloseEditModal = () => {
+    setOpenEditModal(false);
   };
 
   const handleDeletePlace = async () => {
@@ -46,13 +55,9 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
         },
       });
 
-      handleCloseDeleteModal();
+      // handleCloseDeleteModal();
       router.reload();
     } catch (err) {}
-  };
-
-  const handleEditPlace = async () => {
-    await router.push(`/place/${props.id}`);
   };
 
   return (
@@ -61,6 +66,13 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
         open={openDeleteModal}
         handleClose={handleCloseDeleteModal}
         handleConfirm={handleDeletePlace}
+      />
+      <EditPlaceModal
+        open={openEditModal}
+        handleClose={handleCloseEditModal}
+        placeId={props.id}
+        initialTitle={props.title}
+        initialDescription={props.description}
       />
       <Grid item component="li">
         <Card className={classes.place}>
@@ -91,7 +103,7 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
               </Button>
             )}
             {isProfileOwner && (
-              <Button size="small" onClick={handleEditPlace}>
+              <Button size="small" onClick={handleOpenEditModal}>
                 Edit
               </Button>
             )}
