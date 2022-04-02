@@ -41,7 +41,12 @@ const Header = () => {
           <ul className={classes.header__nav}>
             {!token && (
               <li>
-                <Link href={"/auth"}>Sign in</Link>
+                <Link href={"/auth/signin"}>Sign in</Link>
+              </li>
+            )}
+            {!token && (
+              <li>
+                <Link href={"/auth/signup"}>Sign up</Link>
               </li>
             )}
             {token && (
