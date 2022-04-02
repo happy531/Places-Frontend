@@ -2,21 +2,48 @@
 @use "../../styles/variables" as *;
 @use "../../styles/mixin" as *;
 
+.logo {
+  font-size: 2.5rem;
+  font-weight: 500;
+
+  @include flex(center, unset);
+}
+
 .header {
-  @include flex(space-around, space-around);
+  height: $header-height;
   background-color: $header-color;
+  color: $main-color;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   z-index: 99;
+  transition: height 0.3s ease, background-color 0.3s ease;
+
+  &.shrink {
+    height: $header-shrink-height;
+  }
+
+  &__wrap {
+    @include flex(center, space-between);
+    height: 100%;
+    padding: 0 2rem;
+
+
+    @include mobile {
+      justify-content: center;
+    }
+  }
 
   &__nav {
     @include flex(center, unset);
+
     li {
-      padding: 10px 0;
-      margin-left: 1.5rem;
+      padding: 5px 0;
+      margin-left: 2rem;
+      font-weight: 700;
       position: relative;
+      font-size: 1.5rem;
 
       &::after {
         content: "";
@@ -32,6 +59,24 @@
 
       &:hover::after {
         width: 100%;
+      }
+    }
+
+    @include mobile {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 5rem;
+      width: 100%;
+      line-height: 100%;
+      background-color: $header-color;
+      padding: 0 2rem;
+      box-shadow: $box-shadow;
+
+      @include flex(center, space-between);
+
+      li {
+        margin-left: 0;
       }
     }
   }
