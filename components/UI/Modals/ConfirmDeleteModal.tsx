@@ -5,18 +5,37 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import axios from "../../../axios/axios";
+import { useAuth } from "../../../hooks/auth-hook";
+import { useRouter } from "next/router";
 
 interface Props {
   open: boolean;
+  placeId: string;
   handleClose: () => void;
-  handleConfirm: () => void;
 }
 
 const ConfirmDeleteModal: React.FC<Props> = ({
   open,
+  placeId,
   handleClose,
-  handleConfirm,
 }) => {
+  const { token } = useAuth();
+  const router = useRouter();
+
+  const handleDeletePlace = async () => {
+    try {
+      await axios.delete(`/places/${placeId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // handleCloseDeleteModal();
+      router.reload();
+    } catch (err) {}
+  };
+
   return (
     <Dialog
       open={open}
@@ -34,7 +53,7 @@ const ConfirmDeleteModal: React.FC<Props> = ({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleConfirm} autoFocus>
+        <Button onClick={handleDeletePlace} autoFocus>
           Delete
         </Button>
       </DialogActions>

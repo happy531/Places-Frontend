@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../../../hooks/auth-hook";
 import { useRouter } from "next/router";
-import axios from "../../../axios/axios";
 
 import {
   Card,
@@ -21,7 +20,7 @@ import EditPlaceModal from "../../UI/Modals/EditPlaceModal";
 
 const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
   const router = useRouter();
-  const { userId, token } = useAuth();
+  const { userId } = useAuth();
   const isProfileOwner = props.creator === userId;
 
   //visit author profile
@@ -47,25 +46,12 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
     setOpenEditModal(false);
   };
 
-  const handleDeletePlace = async () => {
-    try {
-      await axios.delete(`/places/${props.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      // handleCloseDeleteModal();
-      router.reload();
-    } catch (err) {}
-  };
-
   return (
     <>
       <ConfirmDeleteModal
         open={openDeleteModal}
+        placeId={props.id}
         handleClose={handleCloseDeleteModal}
-        handleConfirm={handleDeletePlace}
       />
       <EditPlaceModal
         open={openEditModal}

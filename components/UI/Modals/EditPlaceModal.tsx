@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -6,9 +6,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { AuthContext } from "../../../context/auth-context";
 import { useRouter } from "next/router";
 import axios from "../../../axios/axios";
+import { useAuth } from "../../../hooks/auth-hook";
 
 interface Props {
   open: boolean;
@@ -25,7 +25,7 @@ const EditPlaceModal: React.FC<Props> = ({
   initialTitle,
   initialDescription,
 }) => {
-  const { token } = useContext(AuthContext);
+  const { token } = useAuth();
   const router = useRouter();
 
   const titleRef = useRef<HTMLInputElement>();
