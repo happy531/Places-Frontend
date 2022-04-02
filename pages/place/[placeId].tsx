@@ -6,6 +6,7 @@ import { AuthContext } from "../../context/auth-context";
 import axios from "../../axios/axios";
 import { Container, Button, Box, TextField } from "@mui/material";
 import Header from "../../components/Header/Header";
+import Head from "next/head";
 
 interface Props {
   place: {
@@ -43,6 +44,11 @@ const EditPlacePage: React.FC<Props> = ({ place }) => {
 
   return (
     <>
+      <Head>
+        <title>Places - Edit place</title>
+        <meta name="edit place" content="Edit existing place" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Header />
       <Container
         sx={{

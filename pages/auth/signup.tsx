@@ -70,7 +70,7 @@ const SignupPage: React.FC = () => {
     <>
       <Head>
         <title>Places - Signup</title>
-        <meta name="places auth" content="places auth page" />
+        <meta name="places signup" content="places signup page" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <>

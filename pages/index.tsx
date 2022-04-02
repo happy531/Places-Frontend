@@ -48,9 +48,7 @@ export default Home;
 export const getServerSideProps: GetServerSideProps = async () => {
   // const { data } = await axios.get("/places");
 
-  const res = await fetch(
-    `https://places-backend-nodejs.herokuapp.com/api/places`
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/places`);
   const placesData = await res.json();
 
   return {

@@ -7,6 +7,7 @@ import { Container, Button, Box, TextField } from "@mui/material";
 import UploadImage from "../../components/UI/UploadImage/UploadImage";
 import Header from "../../components/Header/Header";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
+import Head from "next/head";
 
 const NewPlacePage: React.FC = () => {
   const router = useRouter();
@@ -47,6 +48,11 @@ const NewPlacePage: React.FC = () => {
 
   return (
     <>
+      <Head>
+        <title>Places - Add new place</title>
+        <meta name="new place" content="Add new place" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Header />
       <Container
         sx={{
