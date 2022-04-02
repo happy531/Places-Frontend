@@ -1,12 +1,20 @@
 import React, { useContext, useRef } from "react";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../context/auth-context";
-import axios from "../../axios/axios";
 
+import axios from "../../axios/axios";
 import { Container, Button, Box, TextField } from "@mui/material";
 import Header from "../../components/Header/Header";
 
-const EditPlacePage: React.FC = () => {
+interface Props {
+  place: {
+    title: string;
+    description: string;
+  };
+}
+
+const EditPlacePage: React.FC<Props> = ({ place }) => {
   const { token } = useContext(AuthContext);
   const router = useRouter();
   const { placeId } = router.query;
@@ -58,6 +66,7 @@ const EditPlacePage: React.FC = () => {
         >
           <TextField
             inputRef={titleRef}
+            defaultValue={place.title}
             margin="normal"
             required
             fullWidth
@@ -67,6 +76,7 @@ const EditPlacePage: React.FC = () => {
           />
           <TextField
             inputRef={descriptionRef}
+            defaultValue={place.description}
             margin="normal"
             required
             fullWidth
@@ -84,3 +94,16 @@ const EditPlacePage: React.FC = () => {
 };
 
 export default EditPlacePage;
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  // const { data } = await axios.get("/places");
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/places/${params.placeId}`
+  );
+  const placeData = await res.json();
+
+  return {
+    props: { place: placeData.place },
+  };
+};

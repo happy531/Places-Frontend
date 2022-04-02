@@ -10,6 +10,7 @@ import UserShowcase from "../../components/User/UserShowcase";
 import PlaceError from "../../components/UI/PlaceError/PlaceError";
 
 import IfcPlaceItem from "../../models/IfcPlaceItem";
+import { Container } from "@mui/material";
 
 interface Props {
   user: { name: string; image: string };
@@ -23,15 +24,17 @@ const NewPlacePage: React.FC<Props> = ({ user, placesData }) => {
         <title>Places - {user.name}</title>
         <meta name="user profile" content="User profile" />
       </Head>
+      <Header />
       <main>
-        <Header />
-        <UserShowcase name={user.name} image={user.image} />
-        {placesData.places ? (
-          <PlacesList items={placesData.places} />
-        ) : (
-          <PlaceError message={placesData.message} />
-        )}
-        <Footer />
+        <Container>
+          <UserShowcase name={user.name} image={user.image} />
+          {placesData.places ? (
+            <PlacesList items={placesData.places} />
+          ) : (
+            <PlaceError message={placesData.message} />
+          )}
+          <Footer />
+        </Container>
       </main>
     </>
   );
@@ -43,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   // const { data } = await axios.get(`/places/user/${params.userId}`);
 
   const res = await fetch(
-    `https://places-backend-nodejs.herokuapp.com/api/places/user/${params.userId}`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/places/user/${params.userId}`
   );
   const placesData = await res.json();
 
