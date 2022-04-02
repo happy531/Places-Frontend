@@ -63,17 +63,17 @@
     }
 
     @include mobile {
+      @include flex(center, space-between);
       position: fixed;
       bottom: 0;
       left: 0;
-      height: 5rem;
+      height: 3.5rem;
       width: 100%;
       line-height: 100%;
       background-color: $header-color;
-      padding: 0 2rem;
+      padding: 0 5px;
       box-shadow: $box-shadow;
 
-      @include flex(center, space-between);
 
       li {
         margin-left: 0;

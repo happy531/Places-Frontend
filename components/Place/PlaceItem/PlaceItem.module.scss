@@ -1,0 +1,13 @@
+@use "../../../styles/breakpoint" as *;
+
+.place {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  width: 600px;
+  min-height: 100%;
+
+  @include mobile {
+    width: 400px;
+  }
+}

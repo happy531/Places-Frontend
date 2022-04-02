@@ -15,6 +15,8 @@ import {
 
 import IfcPlaceItem from "../../../models/IfcPlaceItem";
 
+import classes from "./PlaceItem.module.scss";
+
 const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
   const router = useRouter();
   const { userId, token } = useAuth();
@@ -40,16 +42,8 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
   };
 
   return (
-    <Grid item xs={12} sm={6} md={4}>
-      <Card
-        sx={{
-          width: 600,
-          marginTop: 10,
-          minHeight: "100%",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+    <Grid item component="li">
+      <Card className={classes.place}>
         <CardMedia
           component="img"
           sx={{

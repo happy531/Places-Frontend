@@ -5,21 +5,16 @@ import { Grid, Container } from "@mui/material";
 
 import IfcPlaceItem from "../../../models/IfcPlaceItem";
 
+import classes from "./PlacesList.module.scss";
+
 interface Props {
   items: Array<IfcPlaceItem>;
 }
 
 const PlacesList: React.FC<Props> = ({ items }) => {
   return (
-    <Container sx={{ py: 8 }} maxWidth="md">
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-        sx={{ minHeight: "80vh" }}
-      >
+    <Container maxWidth="sm">
+      <Grid component="ul" className={classes.places}>
         {items.reverse().map((place: IfcPlaceItem) => (
           <PlaceItem
             key={place.id}

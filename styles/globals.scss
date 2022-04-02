@@ -26,10 +26,6 @@ body {
   background-color: $main-color;
   color: $txt-color;
 
-
-  @include mobile {
-    margin-bottom: 4rem;
-  }
 }
 
 a {
@@ -50,20 +46,16 @@ ul {
   list-style-type: none;
 }
 
-img {
-  max-width: 100%;
-}
-
 // scroll
 /* total width */
 html::-webkit-scrollbar {
-  background-color: #fff;
+  background-color: transparent;
   width: 16px;
 }
 
 /* background of the scrollbar except button or resizer */
 html::-webkit-scrollbar-track {
-  background-color: #fff;
+  background-color: transparent;
 }
 
 /* scrollbar itself */

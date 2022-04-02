@@ -1,0 +1,7 @@
+@use "../../../styles/mixin" as *;
+
+.places {
+  @include flex(center, center);
+  flex-direction: column;
+  min-height: 60vh;
+}

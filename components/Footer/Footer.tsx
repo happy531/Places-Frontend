@@ -19,7 +19,7 @@ const Copyright: React.FC = () => {
 
 const Footer: React.FC = () => {
   return (
-    <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
+    <Box sx={{ bgcolor: "background.paper", p: 8 }} component="footer">
       <Typography
         variant="subtitle1"
         align="center"

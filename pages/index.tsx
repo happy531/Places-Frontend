@@ -1,14 +1,25 @@
+import React from "react";
 import Head from "next/head";
+import { GetServerSideProps } from "next";
+// import axios from "../axios/axios";
 
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import PlacesList from "../components/Place/PlacesList/PlacesList";
 import Introduction from "../components/Introduction/Introduction";
-import axios from "../axios/axios";
-import { GetServerSideProps } from "next";
 import PlaceError from "../components/UI/PlaceError/PlaceError";
 
-export default function Home({ placesData }) {
+import IfcPlaceItem from "../models/IfcPlaceItem";
+import { Container } from "@mui/material";
+
+interface Props {
+  placesData: {
+    places: Array<IfcPlaceItem>;
+    message: string;
+  };
+}
+
+const Home: React.FC<Props> = ({ placesData }) => {
   return (
     <>
       <Head>
@@ -16,19 +27,23 @@ export default function Home({ placesData }) {
         <meta name="places app" content="places provided from users" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Header />
       <main>
-        <Header />
-        <Introduction />
-        {placesData.places ? (
-          <PlacesList items={placesData.places} />
-        ) : (
-          <PlaceError message={placesData.message} />
-        )}
-        <Footer />
+        <Container>
+          <Introduction />
+          {placesData.places ? (
+            <PlacesList items={placesData.places} />
+          ) : (
+            <PlaceError message={placesData.message} />
+          )}
+          <Footer />
+        </Container>
       </main>
     </>
   );
-}
+};
+
+export default Home;
 
 export const getServerSideProps: GetServerSideProps = async () => {
   // const { data } = await axios.get("/places");
