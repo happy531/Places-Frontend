@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../../hooks/auth-hook";
 import { useRouter } from "next/router";
 import axios from "../../../axios/axios";
@@ -16,15 +16,26 @@ import {
 import IfcPlaceItem from "../../../models/IfcPlaceItem";
 
 import classes from "./PlaceItem.module.scss";
+import ConfirmDeleteModal from "../../UI/Modals/ConfirmDeleteModal";
 
 const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
   const router = useRouter();
   const { userId, token } = useAuth();
-
   const isProfileOwner = props.creator === userId;
 
+  //visit author profile
   const handleVisitAuthorProfile = async () => {
     await router.push(`/user/${props.creator}`);
+  };
+
+  //open modal
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const handleOpenDeleteModal = () => {
+    setOpenDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setOpenDeleteModal(false);
   };
 
   const handleDeletePlace = async () => {
@@ -34,6 +45,9 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      handleCloseDeleteModal();
+      router.reload();
     } catch (err) {}
   };
 
@@ -42,42 +56,49 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
   };
 
   return (
-    <Grid item component="li">
-      <Card className={classes.place}>
-        <CardMedia
-          component="img"
-          sx={{
-            height: "70%",
-          }}
-          image={`${process.env.NEXT_PUBLIC_BACKEND_ASSET_URL}/${props.image}`}
-          alt={props.title}
-        />
-        <CardContent sx={{ flexGrow: 1 }}>
-          <Typography gutterBottom variant="h6" component="h2">
-            {props.title}
-          </Typography>
-          <Typography>{props.description}</Typography>
-        </CardContent>
-        <CardActions sx={{ height: "10%" }}>
-          {props.address && <Button size="small">View</Button>}
-          {!router.query.userId && (
-            <Button size="small" onClick={handleVisitAuthorProfile}>
-              Author
-            </Button>
-          )}
-          {isProfileOwner && (
-            <Button size="small" onClick={handleDeletePlace}>
-              Delete
-            </Button>
-          )}
-          {isProfileOwner && (
-            <Button size="small" onClick={handleEditPlace}>
-              Edit
-            </Button>
-          )}
-        </CardActions>
-      </Card>
-    </Grid>
+    <>
+      <ConfirmDeleteModal
+        open={openDeleteModal}
+        handleClose={handleCloseDeleteModal}
+        handleConfirm={handleDeletePlace}
+      />
+      <Grid item component="li">
+        <Card className={classes.place}>
+          <CardMedia
+            component="img"
+            sx={{
+              height: "70%",
+            }}
+            image={`${process.env.NEXT_PUBLIC_BACKEND_ASSET_URL}/${props.image}`}
+            alt={props.title}
+          />
+          <CardContent sx={{ flexGrow: 1 }}>
+            <Typography gutterBottom variant="h6" component="h2">
+              {props.title}
+            </Typography>
+            <Typography>{props.description}</Typography>
+          </CardContent>
+          <CardActions sx={{ height: "10%" }}>
+            {props.address && <Button size="small">View</Button>}
+            {!router.query.userId && (
+              <Button size="small" onClick={handleVisitAuthorProfile}>
+                Author
+              </Button>
+            )}
+            {isProfileOwner && (
+              <Button size="small" onClick={handleOpenDeleteModal}>
+                Delete
+              </Button>
+            )}
+            {isProfileOwner && (
+              <Button size="small" onClick={handleEditPlace}>
+                Edit
+              </Button>
+            )}
+          </CardActions>
+        </Card>
+      </Grid>
+    </>
   );
 };
 
