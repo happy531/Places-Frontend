@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Typography } from "@mui/material";
+import { Avatar, Grid } from "@mui/material";
 
 import classes from "./UserShowcase.module.scss";
 
@@ -10,14 +10,14 @@ interface Props {
 
 const UserShowcase: React.FC<Props> = ({ name, image }) => {
   return (
-    <Typography component="div" className={classes.showcase}>
+    <Grid container className={classes.showcase}>
       <Avatar
         alt={name}
         src={`${process.env.NEXT_PUBLIC_BACKEND_ASSET_URL}/${image}`}
         className={classes.avatar}
       />
       <h2>{name}</h2>
-    </Typography>
+    </Grid>
   );
 };
 

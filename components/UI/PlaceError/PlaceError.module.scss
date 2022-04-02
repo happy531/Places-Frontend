@@ -3,7 +3,7 @@
 .error {
   @include flex(center, center);
   flex-direction: column;
-  min-height: 50vh;
+  min-height: 60vh;
 
   p {
     padding: 30px;
