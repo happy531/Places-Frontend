@@ -14,6 +14,7 @@ import {
   Box,
   Typography,
   Container,
+  Alert,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
@@ -32,6 +33,7 @@ export default function Signup() {
   const auth = useContext(AuthContext);
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>(null);
   const [selectedImage, setSelectedImage] = useState<File>(null);
 
   const {
@@ -42,6 +44,7 @@ export default function Signup() {
 
   const onSubmit: SubmitHandler<Inputs> = async (inputs) => {
     try {
+      setErrorMessage(null);
       setLoading(true);
 
       const formData = new FormData();
@@ -49,7 +52,7 @@ export default function Signup() {
       formData.append("name", inputs.name);
       formData.append("password", inputs.password);
       formData.append("image", selectedImage);
-      console.log(formData);
+
       const { data } = await axios.post("/users/signup", formData);
 
       auth.login(data.userId, data.token);
@@ -58,6 +61,7 @@ export default function Signup() {
 
       setLoading(false);
     } catch (err) {
+      setErrorMessage(err.response.data.message);
       setLoading(false);
     }
   };
@@ -89,6 +93,11 @@ export default function Signup() {
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
+            {errorMessage && (
+              <Alert severity="error" style={{ width: "100%", margin: 5 }}>
+                {errorMessage}
+              </Alert>
+            )}
             <Box
               component="form"
               onSubmit={handleSubmit(onSubmit)}
@@ -110,7 +119,7 @@ export default function Signup() {
                       // type="email"
                       label="Email Address"
                       error={!!errors.email}
-                      helperText={errors.email && errors.email?.message}
+                      helperText={errors.email && errors.email.message}
                       margin="normal"
                       fullWidth
                       autoComplete="email"
@@ -131,7 +140,7 @@ export default function Signup() {
                       type="name"
                       label="Name"
                       error={!!errors.name}
-                      helperText={errors.name && errors.name?.message}
+                      helperText={errors.name && errors.name.message}
                       margin="normal"
                       fullWidth
                       autoComplete="name"
@@ -152,7 +161,7 @@ export default function Signup() {
                       type="password"
                       label="Password"
                       error={!!errors.password}
-                      helperText={errors.password && errors.password?.message}
+                      helperText={errors.password && errors.password.message}
                       margin="normal"
                       fullWidth
                       autoComplete="password"

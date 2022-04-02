@@ -14,6 +14,7 @@ import {
   Box,
   Typography,
   Container,
+  Alert,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
@@ -30,6 +31,7 @@ export default function Auth() {
   const auth = useContext(AuthContext);
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>(null);
 
   const {
     handleSubmit,
@@ -39,6 +41,7 @@ export default function Auth() {
 
   const onSubmit: SubmitHandler<Inputs> = async (inputs) => {
     try {
+      setErrorMessage(null);
       setLoading(true);
 
       const { data } = await axios.post("/users/login", {
@@ -54,7 +57,7 @@ export default function Auth() {
 
       setLoading(false);
     } catch (err) {
-      console.log(err.message);
+      setErrorMessage(err.response.data.message);
       setLoading(false);
     }
   };
@@ -86,6 +89,11 @@ export default function Auth() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
+            {errorMessage && (
+              <Alert severity="error" style={{ width: "100%", margin: 5 }}>
+                {errorMessage}
+              </Alert>
+            )}
             <Box
               component="form"
               onSubmit={handleSubmit(onSubmit)}
