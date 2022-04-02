@@ -2,11 +2,13 @@
 @use "../../../styles/breakpoint" as *;
 
 .avatar {
+  position: relative;
   width: 100px;
   height: 100px;
   margin: 0 auto;
   border: 1px solid gray;
   box-shadow: $box-shadow;
+  cursor: pointer;
 }
 
 .place_image_container {
@@ -14,7 +16,7 @@
   width: 500px;
   height: 400px;
   margin: 0 auto;
-  overflow:hidden;
+  overflow: hidden;
 
   @include mobile {
     width: 350px;

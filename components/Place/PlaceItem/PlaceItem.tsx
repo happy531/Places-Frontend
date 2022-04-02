@@ -59,7 +59,7 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
           <Typography>{props.description}</Typography>
         </CardContent>
         <CardActions sx={{ height: "10%" }}>
-          <Button size="small">View</Button>
+          {props.address && <Button size="small">View</Button>}
           {!router.query.userId && (
             <Button size="small" onClick={handleVisitAuthorProfile}>
               Author

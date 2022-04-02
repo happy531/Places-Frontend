@@ -38,6 +38,7 @@ const UploadImage: React.FC<Props> = ({
           alt="your image"
           src={URL.createObjectURL(selectedImage)}
           className={classes.avatar}
+          onClick={() => onSetSelectedImage(null)}
         />
       )}
       {!selectedImage && (
