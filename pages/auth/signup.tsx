@@ -173,8 +173,7 @@ const SignupPage: React.FC = () => {
               <UploadImage
                 selectedImage={selectedImage}
                 onSetSelectedImage={setSelectedImage}
-                width={300}
-                height={200}
+                isProfilePhoto={true}
               />
 
               {!loading ? (

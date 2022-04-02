@@ -1,16 +1,25 @@
 @use "../../styles/mixin" as *;
 @use "../../styles/variables" as *;
+@use "../../styles/breakpoint" as *;
 
 .showcase {
   @include flex(center, center);
   flex-direction: column;
   margin: 0 auto 0 auto;
-  width: 12vw;
+  max-width: 15vw;
   padding: 10px;
   background-color: $white;
   border: 2px solid gray;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
+
+  @include mobile {
+    min-width: 90vw;
+  }
+
+  @include tablet {
+    min-width: 50vw;
+  }
 
   .avatar {
     width: 100px;
