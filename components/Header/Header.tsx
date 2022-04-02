@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../hooks/auth-hook";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { Typography } from "@mui/material";
 import CameraIcon from "@mui/icons-material/PhotoCamera";
@@ -8,6 +9,9 @@ import CameraIcon from "@mui/icons-material/PhotoCamera";
 import classes from "./Header.module.scss";
 
 const Header: React.FC = () => {
+  const { userId, token, logout } = useAuth();
+  const { pathname } = useRouter();
+
   const [shrink, setShrink] = useState<boolean>(false);
 
   useEffect(() => {
@@ -24,8 +28,6 @@ const Header: React.FC = () => {
     };
   }, []);
 
-  const { userId, token, logout } = useAuth();
-
   const handleLogout = () => {
     logout();
   };
@@ -39,7 +41,14 @@ const Header: React.FC = () => {
             <Link href="/">Places App</Link>
           </Typography>
         </div>
-        <ul className={classes.header__nav}>
+        <ul
+          className={classes.header__nav}
+          style={
+            pathname === "/auth/signin" || pathname === "/auth/signup"
+              ? { display: "none" }
+              : {}
+          }
+        >
           {!token && (
             <li>
               <Link href={"/auth/signin"}>Sign in</Link>
