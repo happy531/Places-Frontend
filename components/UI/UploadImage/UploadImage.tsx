@@ -23,16 +23,7 @@ const UploadImage: React.FC<Props> = ({
   return (
     <>
       {selectedImage && !isProfilePhoto && (
-        <div
-          style={{
-            borderRadius: "10px",
-            width: width,
-            height: height,
-            marginLeft: "auto",
-            marginRight: "auto",
-            overflow: "hidden",
-          }}
-        >
+        <div className={classes.place_image_container}>
           <Image
             alt="your image"
             width={width}

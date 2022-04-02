@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/auth-context";
 import axios from "../../axios/axios";
 
 import { Container, Button, Box, TextField } from "@mui/material";
+import Header from "../../components/Header/Header";
 
 const EditPlacePage: React.FC = () => {
   const { token } = useContext(AuthContext);
@@ -33,49 +34,52 @@ const EditPlacePage: React.FC = () => {
   };
 
   return (
-    <Container
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <Box
-        component="form"
-        onSubmit={placeUpdateSubmitHandler}
+    <>
+      <Header />
+      <Container
         sx={{
-          width: 500,
-          marginTop: 15,
-          maxWidth: "100%",
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
           flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        <TextField
-          inputRef={titleRef}
-          margin="normal"
-          required
-          fullWidth
-          id="title"
-          label="Title"
-          name="title"
-        />
-        <TextField
-          inputRef={descriptionRef}
-          margin="normal"
-          required
-          fullWidth
-          id="description"
-          label="Description"
-          name="description"
-        />
-        <Button variant="contained" type="submit" fullWidth>
-          UPDATE PLACE
-        </Button>
-      </Box>
-    </Container>
+        <Box
+          component="form"
+          onSubmit={placeUpdateSubmitHandler}
+          sx={{
+            width: 500,
+            marginTop: 15,
+            maxWidth: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <TextField
+            inputRef={titleRef}
+            margin="normal"
+            required
+            fullWidth
+            id="title"
+            label="Title"
+            name="title"
+          />
+          <TextField
+            inputRef={descriptionRef}
+            margin="normal"
+            required
+            fullWidth
+            id="description"
+            label="Description"
+            name="description"
+          />
+          <Button variant="contained" type="submit" fullWidth>
+            UPDATE PLACE
+          </Button>
+        </Box>
+      </Container>
+    </>
   );
 };
 
