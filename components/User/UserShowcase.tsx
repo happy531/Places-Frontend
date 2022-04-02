@@ -1,6 +1,8 @@
 import React from "react";
 import { Grid, Avatar } from "@mui/material";
 
+import classes from "./UserShowcase.module.scss";
+
 interface Props {
   name: string;
   image: string;
@@ -8,24 +10,11 @@ interface Props {
 
 const UserShowcase: React.FC<Props> = ({ name, image }) => {
   return (
-    <Grid
-      container
-      spacing={0}
-      direction="row"
-      alignItems="center"
-      justifyContent="space-around"
-      sx={{
-        marginLeft: "auto",
-        marginRight: "auto",
-        width: "15%",
-        backgroundColor: "lightblue",
-        border: "2px solid gray",
-      }}
-    >
+    <Grid container spacing={0} className={classes.showcase}>
       <Avatar
         alt={name}
         src={`${process.env.NEXT_PUBLIC_BACKEND_ASSET_URL}/${image}`}
-        sx={{ width: 100, height: 100, border: "1px solid black" }}
+        className={classes.avatar}
       />
       <h2>{name}</h2>
     </Grid>
