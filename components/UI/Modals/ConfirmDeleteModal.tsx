@@ -6,7 +6,17 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function AlertDialog({ open, handleClose, handleConfirm }) {
+interface Props {
+  open: boolean;
+  handleClose: () => void;
+  handleConfirm: () => void;
+}
+
+const ConfirmDeleteModal: React.FC<Props> = ({
+  open,
+  handleClose,
+  handleConfirm,
+}) => {
   return (
     <Dialog
       open={open}
@@ -30,4 +40,6 @@ export default function AlertDialog({ open, handleClose, handleConfirm }) {
       </DialogActions>
     </Dialog>
   );
-}
+};
+
+export default ConfirmDeleteModal;

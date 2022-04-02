@@ -10,13 +10,21 @@ import { AuthContext } from "../../../context/auth-context";
 import { useRouter } from "next/router";
 import axios from "../../../axios/axios";
 
-export default function EditPlaceModal({
+interface Props {
+  open: boolean;
+  handleClose: () => void;
+  placeId: string;
+  initialTitle: string;
+  initialDescription: string;
+}
+
+const EditPlaceModal: React.FC<Props> = ({
   open,
   handleClose,
   placeId,
   initialTitle,
   initialDescription,
-}) {
+}) => {
   const { token } = useContext(AuthContext);
   const router = useRouter();
 
@@ -74,4 +82,6 @@ export default function EditPlaceModal({
       </DialogActions>
     </Dialog>
   );
-}
+};
+
+export default EditPlaceModal;
