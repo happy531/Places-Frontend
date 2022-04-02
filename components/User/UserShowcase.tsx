@@ -1,6 +1,5 @@
 import React from "react";
-import Avatar from "@mui/material/Avatar";
-import Grid from "@mui/material/Grid";
+import { Grid, Avatar } from "@mui/material";
 
 interface Props {
   name: string;

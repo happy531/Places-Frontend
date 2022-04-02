@@ -1,16 +1,19 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import React from "react";
+import { useAuth } from "../../../hooks/auth-hook";
+import { useRouter } from "next/router";
+import axios from "../../../axios/axios";
+
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Typography,
+  Button,
+  Grid,
+} from "@mui/material";
 
 import IfcPlaceItem from "../../../models/IfcPlaceItem";
-import Grid from "@mui/material/Grid";
-import { useRouter } from "next/router";
-import { useAuth } from "../../../hooks/auth-hook";
-import axios from "../../../axios/axios";
 
 const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
   const router = useRouter();

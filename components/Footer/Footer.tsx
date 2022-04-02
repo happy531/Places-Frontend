@@ -1,9 +1,7 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+import { Box, Typography, Link } from "@mui/material";
 
-function Copyright() {
+const Copyright: React.FC = () => {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
@@ -17,9 +15,9 @@ function Copyright() {
       {"."}
     </Typography>
   );
-}
+};
 
-export default function Footer() {
+const Footer: React.FC = () => {
   return (
     <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
       <Typography
@@ -40,4 +38,6 @@ export default function Footer() {
       <Copyright />
     </Box>
   );
-}
+};
+
+export default Footer;

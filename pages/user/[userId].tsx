@@ -1,14 +1,22 @@
+import React from "react";
 import Head from "next/head";
+import { GetServerSideProps } from "next";
+import axios from "../../axios/axios";
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import PlacesList from "../../components/Place/PlacesList/PlacesList";
-import axios from "../../axios/axios";
 import UserShowcase from "../../components/User/UserShowcase";
-import { GetServerSideProps } from "next";
 import PlaceError from "../../components/UI/PlaceError/PlaceError";
 
-export default function UserProfile({ user, placesData }) {
+import IfcPlaceItem from "../../models/IfcPlaceItem";
+
+interface Props {
+  user: { name: string; image: string };
+  placesData: { places?: Array<IfcPlaceItem>; message?: string };
+}
+
+const NewPlacePage: React.FC<Props> = ({ user, placesData }) => {
   return (
     <>
       <Head>
@@ -27,7 +35,9 @@ export default function UserProfile({ user, placesData }) {
       </main>
     </>
   );
-}
+};
+
+export default NewPlacePage;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   // const { data } = await axios.get(`/places/user/${params.userId}`);

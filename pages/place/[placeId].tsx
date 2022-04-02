@@ -1,27 +1,17 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import { Container, Button } from "@mui/material";
-import axios from "../../axios/axios";
-import { AuthContext } from "../../context/auth-context";
+import React, { useContext, useRef } from "react";
 import { useRouter } from "next/router";
+import { AuthContext } from "../../context/auth-context";
+import axios from "../../axios/axios";
 
-export default function New() {
+import { Container, Button, Box, TextField } from "@mui/material";
+
+const EditPlacePage: React.FC = () => {
   const { token } = useContext(AuthContext);
   const router = useRouter();
   const { placeId } = router.query;
 
   const titleRef = useRef<HTMLInputElement>();
   const descriptionRef = useRef<HTMLInputElement>();
-
-  // useEffect(() => {
-  //   const fetchPlace = async () => {
-  //     try {
-  //       const { data } = await axios.get(`/places/${placeId}`);
-  //     } catch (err) {}
-  //   };
-  //   fetchPlace();
-  // }, [placeId]);
 
   const placeUpdateSubmitHandler = async (event) => {
     event.preventDefault();
@@ -87,4 +77,6 @@ export default function New() {
       </Box>
     </Container>
   );
-}
+};
+
+export default EditPlacePage;

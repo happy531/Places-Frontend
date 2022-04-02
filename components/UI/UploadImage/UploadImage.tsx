@@ -1,7 +1,8 @@
 import React, { ChangeEvent } from "react";
 import Image from "next/image";
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+
 import { CardContent, Fab, Grid } from "@mui/material";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 interface Props {
   selectedImage: Blob | MediaSource;

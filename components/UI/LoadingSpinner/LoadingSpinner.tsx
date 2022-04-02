@@ -1,8 +1,7 @@
 import React from "react";
-import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
+import { Box, CircularProgress } from "@mui/material";
 
-export default function LoadingSpinner() {
+const LoadingSpinner: React.FC = () => {
   return (
     <Box
       sx={{
@@ -16,4 +15,6 @@ export default function LoadingSpinner() {
       <CircularProgress />
     </Box>
   );
-}
+};
+
+export default LoadingSpinner;

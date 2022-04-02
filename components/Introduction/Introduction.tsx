@@ -1,11 +1,7 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import React from "react";
+import { Button, Stack, Box, Typography, Container } from "@mui/material";
 
-const Introduction = () => {
+const Introduction: React.FC = () => {
   return (
     <Box
       sx={{

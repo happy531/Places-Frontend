@@ -1,7 +1,8 @@
 import React from "react";
-import Link from "next/link";
-import { Button } from "@mui/material";
 import { useAuth } from "../../../hooks/auth-hook";
+import Link from "next/link";
+
+import { Button } from "@mui/material";
 
 import classes from "./PlaceError.module.scss";
 
@@ -20,7 +21,7 @@ const PlaceError: React.FC<Props> = ({ message }) => {
           {token ? (
             <Link href={"/place/new"}>SHARE PLACE</Link>
           ) : (
-            <Link href={"/auth"}>Sign in</Link>
+            <Link href={"/auth/signin"}>Sign in</Link>
           )}
         </Button>
       </div>

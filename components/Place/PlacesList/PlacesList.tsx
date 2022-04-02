@@ -1,7 +1,8 @@
-import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
+import React from "react";
 import PlaceItem from "../PlaceItem/PlaceItem";
+
+import { Grid, Container } from "@mui/material";
+
 import IfcPlaceItem from "../../../models/IfcPlaceItem";
 
 interface Props {

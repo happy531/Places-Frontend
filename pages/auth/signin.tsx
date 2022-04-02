@@ -26,7 +26,7 @@ interface Inputs {
   password: string;
 }
 
-export default function Auth() {
+const SigninPage: React.FC = () => {
   const router = useRouter();
   const auth = useContext(AuthContext);
 
@@ -177,4 +177,6 @@ export default function Auth() {
       </>
     </>
   );
-}
+};
+
+export default SigninPage;

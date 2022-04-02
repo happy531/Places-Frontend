@@ -1,15 +1,14 @@
 import React, { useContext, useRef, useState } from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import { Container, Button } from "@mui/material";
-import UploadImage from "../../components/UI/UploadImage/UploadImage";
-import axios from "../../axios/axios";
-import { AuthContext } from "../../context/auth-context";
-import Header from "../../components/Header/Header";
 import { useRouter } from "next/router";
+import { AuthContext } from "../../context/auth-context";
+import axios from "../../axios/axios";
+
+import { Container, Button, Box, TextField } from "@mui/material";
+import UploadImage from "../../components/UI/UploadImage/UploadImage";
+import Header from "../../components/Header/Header";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 
-export default function New() {
+const NewPlacePage: React.FC = () => {
   const router = useRouter();
   const { token } = useContext(AuthContext);
 
@@ -113,4 +112,6 @@ export default function New() {
       </Container>
     </>
   );
-}
+};
+
+export default NewPlacePage;

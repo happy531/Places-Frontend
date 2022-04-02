@@ -28,7 +28,7 @@ interface Inputs {
   password: string;
 }
 
-export default function Signup() {
+const SignupPage: React.FC = () => {
   const router = useRouter();
   const auth = useContext(AuthContext);
 
@@ -206,4 +206,6 @@ export default function Signup() {
       </>
     </>
   );
-}
+};
+
+export default SignupPage;

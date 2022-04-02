@@ -1,14 +1,13 @@
+import React from "react";
 import Link from "next/link";
-
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import CameraIcon from "@mui/icons-material/PhotoCamera";
-import Typography from "@mui/material/Typography";
-
-import classes from "./Header.module.scss";
 import { useAuth } from "../../hooks/auth-hook";
 
-const Header = () => {
+import { AppBar, Toolbar, Typography } from "@mui/material";
+import CameraIcon from "@mui/icons-material/PhotoCamera";
+
+import classes from "./Header.module.scss";
+
+const Header: React.FC = () => {
   const { userId, token, logout } = useAuth();
 
   const handleLogout = () => {
