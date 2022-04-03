@@ -9,7 +9,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   flex-direction: column;
-  //margin: 0 auto 0 auto;
+  margin: 0 auto 0 auto;
   max-width: 15vw;
   padding: 5px;
   background-color: $white;
@@ -33,6 +33,7 @@
   }
 
   h2 {
+    display: block;
     margin-top: 2px;
   }
 }

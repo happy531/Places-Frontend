@@ -17,6 +17,7 @@ import IfcPlaceItem from "../../../models/IfcPlaceItem";
 import classes from "./PlaceItem.module.scss";
 import ConfirmDeleteModal from "../../UI/Modals/ConfirmDeleteModal";
 import EditPlaceModal from "../../UI/Modals/EditPlaceModal";
+import MapModal from "../../UI/Modals/MapModal";
 
 const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
   const router = useRouter();
@@ -28,7 +29,7 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
     await router.push(`/user/${props.creator}`);
   };
 
-  //open modal
+  //open delete modal
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const handleOpenDeleteModal = () => {
     setOpenDeleteModal(true);
@@ -37,13 +38,22 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
     setOpenDeleteModal(false);
   };
 
-  //edit modal
+  //open edit modal
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const handleOpenEditModal = () => {
     setOpenEditModal(true);
   };
   const handleCloseEditModal = () => {
     setOpenEditModal(false);
+  };
+
+  //open map modal
+  const [openMap, setOpenMap] = useState<boolean>(false);
+  const handleOpenMap = () => {
+    setOpenMap(true);
+  };
+  const handleCloseMap = () => {
+    setOpenMap(false);
   };
 
   return (
@@ -59,6 +69,12 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
         placeId={props.id}
         initialTitle={props.title}
         initialDescription={props.description}
+      />
+      <MapModal
+        open={openMap}
+        placeTitle={props.title}
+        coords={props.location}
+        handleClose={handleCloseMap}
       />
       <Grid item component="li">
         <Card className={classes.place}>
@@ -77,7 +93,11 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
             <Typography>{props.description}</Typography>
           </CardContent>
           <CardActions sx={{ height: "10%" }}>
-            {props.address && <Button size="small">View</Button>}
+            {props.address && (
+              <Button size="small" onClick={handleOpenMap}>
+                View
+              </Button>
+            )}
             {!router.query.userId && (
               <Button size="small" onClick={handleVisitAuthorProfile}>
                 Author

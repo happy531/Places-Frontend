@@ -1,7 +1,8 @@
+import "leaflet/dist/leaflet.css";
+import "../styles/globals.scss";
+
 import { AuthContext } from "../context/auth-context";
 import { useAuth } from "../hooks/auth-hook";
-
-import "../styles/globals.scss";
 
 function MyApp({ Component, pageProps }) {
   const { token, login, logout, userId } = useAuth();

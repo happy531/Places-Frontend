@@ -1,0 +1,11 @@
+@use "../../styles/breakpoint" as *;
+
+.map {
+  width: 400px;
+  height: 400px;
+
+  @include mobile {
+    width: 250px;
+    height: 250px;
+  }
+}
