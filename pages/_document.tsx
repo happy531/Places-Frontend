@@ -6,9 +6,9 @@ class MyDocument extends Document {
       <Html lang={"en"}>
         <Head />
         <body>
-          <div className="delete_overlay" />
-          <div className="edit_overlay" />
-          <div className="map_overlay" />
+          <div id="delete_overlay" />
+          <div id="edit_overlay" />
+          <div id="map_overlay" />
           <Main />
           <NextScript />
         </body>
