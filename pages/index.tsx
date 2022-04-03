@@ -24,8 +24,7 @@ const Home: React.FC<Props> = ({ placesData }) => {
     <>
       <Head>
         <title>Places - Home Page</title>
-        <meta name="places app" content="places provided from users" />
-        <link rel="icon" href="/favicon.png" />
+        <meta name="home" content="Places app home page" />
       </Head>
       <Header />
       <main>

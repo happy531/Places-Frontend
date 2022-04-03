@@ -50,8 +50,7 @@ const NewPlacePage: React.FC = () => {
     <>
       <Head>
         <title>Places - Add new place</title>
-        <meta name="new place" content="Add new place" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name="add" content="Add new place" />
       </Head>
       <Header />
       <Container

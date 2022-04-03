@@ -22,7 +22,7 @@ const NewPlacePage: React.FC<Props> = ({ user, placesData }) => {
     <>
       <Head>
         <title>Places - {user.name}</title>
-        <meta name="user profile" content="User profile" />
+        <meta name="profile" content="User profile" />
       </Head>
       <Header />
       <main>
