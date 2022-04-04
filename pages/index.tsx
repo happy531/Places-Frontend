@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 // import axios from "../axios/axios";
 
 import Header from "../components/Header/Header";
@@ -44,7 +44,7 @@ const Home: React.FC<Props> = ({ placesData }) => {
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   // const { data } = await axios.get("/places");
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/places`);

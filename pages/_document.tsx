@@ -10,6 +10,10 @@ class MyDocument extends Document {
             name="viewport"
             content="initial-scale=1.0, width=device-width"
           />
+          <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+          />
           <link rel="icon" href="/favicon.png" />
         </Head>
         <body>

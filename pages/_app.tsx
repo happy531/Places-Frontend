@@ -1,10 +1,11 @@
+import "../styles/globals.css";
 import "leaflet/dist/leaflet.css";
-import "../styles/globals.scss";
 
 import { AuthContext } from "../context/auth-context";
 import { useAuth } from "../hooks/auth-hook";
+import type { AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }) {
+const App = ({ Component, pageProps }: AppProps): JSX.Element => {
   const { token, login, logout, userId } = useAuth();
 
   return (
@@ -20,6 +21,6 @@ function MyApp({ Component, pageProps }) {
       <Component {...pageProps} />
     </AuthContext.Provider>
   );
-}
+};
 
-export default MyApp;
+export default App;
