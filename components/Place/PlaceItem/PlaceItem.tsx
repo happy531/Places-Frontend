@@ -88,11 +88,6 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
           />
           <CardContent sx={{ flexGrow: 1 }}>
             <Typography gutterBottom variant="h6" component="h2">
-              Image no longer available.
-            </Typography>
-          </CardContent>
-          <CardContent sx={{ flexGrow: 1 }}>
-            <Typography gutterBottom variant="h6" component="h2">
               {props.title}
             </Typography>
             <Typography>{props.description}</Typography>

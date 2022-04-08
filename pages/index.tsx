@@ -25,6 +25,7 @@ const Home: React.FC<Props> = ({ placesData }) => {
       <Head>
         <title>Places - Home Page</title>
         <meta name="home" content="Places app home page" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Header />
       <main>
