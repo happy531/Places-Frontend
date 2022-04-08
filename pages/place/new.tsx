@@ -7,7 +7,7 @@ import axios from "../../axios/axios";
 import UploadImage from "../../components/UI/UploadImage/UploadImage";
 import Header from "../../components/Header/Header";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
-import { Container, Button, Box, TextField } from "@mui/material";
+import { Container, Button, Box, TextField, Alert } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 interface Inputs {
@@ -32,6 +32,7 @@ const NewPlacePage: React.FC = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (inputs) => {
     try {
+      setErrorMessage(null);
       setLoading(true);
 
       const formData = new FormData();
@@ -50,6 +51,7 @@ const NewPlacePage: React.FC = () => {
 
       setLoading(false);
     } catch (err) {
+      if (err.response) setErrorMessage(err.response.data.message);
       setLoading(false);
     }
   };
@@ -81,6 +83,12 @@ const NewPlacePage: React.FC = () => {
             alignItems: "center",
           }}
         >
+          {errorMessage && (
+            <Alert severity="error" style={{ width: "100%", margin: 5 }}>
+              {errorMessage}
+            </Alert>
+          )}
+
           <Controller
             name="title"
             control={control}
