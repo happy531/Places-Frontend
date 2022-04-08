@@ -67,7 +67,7 @@ const SigninPage: React.FC = () => {
 
       setLoading(false);
     } catch (err) {
-      setErrorMessage(err.response.data.message);
+      if (err.response) setErrorMessage(err.response.data.message);
       setLoading(false);
     }
   };
@@ -123,7 +123,7 @@ const SigninPage: React.FC = () => {
                     return (
                       <TextField
                         {...field}
-                        type="email"
+                        // type="email"
                         label="Email Address"
                         error={!!errors.email}
                         helperText={errors.email && errors.email.message}
