@@ -9,7 +9,7 @@ const LoadingSpinner: React.FC = () => {
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
-        marginTop: 10,
+        marginTop: 5,
       }}
     >
       <CircularProgress />

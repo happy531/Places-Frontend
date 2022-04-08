@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -9,6 +9,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useRouter } from "next/router";
 import axios from "../../../axios/axios";
 import { useAuth } from "../../../hooks/auth-hook";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { Alert } from "@mui/material";
 
 interface Props {
   open: boolean;
@@ -28,11 +30,17 @@ const EditPlaceModal: React.FC<Props> = ({
   const { token } = useAuth();
   const router = useRouter();
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>(null);
+
   const titleRef = useRef<HTMLInputElement>();
   const descriptionRef = useRef<HTMLInputElement>();
 
   const handleUpdatePlace = async () => {
     try {
+      setErrorMessage(null);
+      setLoading(true);
+
       await axios.patch(
         `/places/${placeId}`,
         {
@@ -45,9 +53,11 @@ const EditPlaceModal: React.FC<Props> = ({
           },
         }
       );
-      // await router.push("/");
       router.reload();
-    } catch (err) {}
+    } catch (err) {
+      if (err.response) setErrorMessage(err.response.data.message);
+      setLoading(false);
+    }
   };
 
   return (
@@ -55,6 +65,11 @@ const EditPlaceModal: React.FC<Props> = ({
       <DialogTitle>Edit place</DialogTitle>
       <DialogContent>
         <DialogContentText>You are editing this place.</DialogContentText>
+        {errorMessage && (
+          <Alert severity="error" style={{ width: "100%", margin: 5 }}>
+            {errorMessage}
+          </Alert>
+        )}
         <TextField
           inputRef={titleRef}
           defaultValue={initialTitle}
@@ -77,8 +92,13 @@ const EditPlaceModal: React.FC<Props> = ({
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleUpdatePlace}>Edit</Button>
+        {loading && <LoadingSpinner />}
+        {!loading && (
+          <>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleUpdatePlace}>Edit</Button>
+          </>
+        )}
       </DialogActions>
     </Dialog>
   );
