@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Head from "next/head";
 import { useAuth } from "../../hooks/auth-hook";
 import { useRouter } from "next/router";
@@ -8,6 +8,13 @@ import UploadImage from "../../components/UI/UploadImage/UploadImage";
 import Header from "../../components/Header/Header";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 import { Container, Button, Box, TextField } from "@mui/material";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+
+interface Inputs {
+  title: string;
+  description: string;
+  address: string;
+}
 
 const NewPlacePage: React.FC = () => {
   const router = useRouter();
@@ -15,20 +22,22 @@ const NewPlacePage: React.FC = () => {
 
   const [selectedImage, setSelectedImage] = useState<File>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>(null);
 
-  const titleRef = useRef<HTMLInputElement>();
-  const descriptionRef = useRef<HTMLInputElement>();
-  const addressRef = useRef<HTMLInputElement>();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<Inputs>();
 
-  const placeSubmitHandler = async (event) => {
-    event.preventDefault();
+  const onSubmit: SubmitHandler<Inputs> = async (inputs) => {
     try {
       setLoading(true);
 
       const formData = new FormData();
-      formData.append("title", titleRef.current.value);
-      formData.append("description", descriptionRef.current.value);
-      formData.append("address", addressRef.current.value);
+      formData.append("title", inputs.title);
+      formData.append("description", inputs.description);
+      formData.append("address", inputs.address);
       formData.append("image", selectedImage);
 
       const { data } = await axios.post("/places", formData, {
@@ -61,7 +70,7 @@ const NewPlacePage: React.FC = () => {
       >
         <Box
           component="form"
-          onSubmit={placeSubmitHandler}
+          onSubmit={handleSubmit(onSubmit)}
           sx={{
             width: 500,
             marginTop: 15,
@@ -72,39 +81,79 @@ const NewPlacePage: React.FC = () => {
             alignItems: "center",
           }}
         >
-          <TextField
-            inputRef={titleRef}
-            margin="normal"
-            required
-            fullWidth
-            id="title"
-            label="Title"
+          <Controller
             name="title"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: "Enter a non empty title.",
+            }}
+            render={({ field }) => {
+              return (
+                <TextField
+                  {...field}
+                  type="title"
+                  label="Title"
+                  error={!!errors.title}
+                  helperText={errors.title && errors.title.message}
+                  margin="normal"
+                  fullWidth
+                />
+              );
+            }}
           />
-          <TextField
-            inputRef={descriptionRef}
-            margin="normal"
-            required
-            fullWidth
-            id="description"
-            label="Description"
+
+          <Controller
             name="description"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: "Enter a non empty description.",
+            }}
+            render={({ field }) => {
+              return (
+                <TextField
+                  {...field}
+                  type="description"
+                  label="Description"
+                  error={!!errors.description}
+                  helperText={errors.description && errors.description.message}
+                  margin="normal"
+                  fullWidth
+                />
+              );
+            }}
           />
+
           <UploadImage
             selectedImage={selectedImage}
             onSetSelectedImage={setSelectedImage}
             width={500}
             height={400}
           />
-          <TextField
-            inputRef={addressRef}
-            margin="normal"
-            required
-            fullWidth
-            id="address"
-            label="Address (its needed by the minimap)"
+
+          <Controller
             name="address"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: "Enter a non empty address.",
+            }}
+            render={({ field }) => {
+              return (
+                <TextField
+                  {...field}
+                  type="address"
+                  label="Address (its needed by the minimap)"
+                  error={!!errors.address}
+                  helperText={errors.address && errors.address.message}
+                  margin="normal"
+                  fullWidth
+                />
+              );
+            }}
           />
+
           {!loading ? (
             <Button variant="contained" type="submit" fullWidth>
               POST
