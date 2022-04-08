@@ -1,7 +1,9 @@
 import { useState, useCallback, useEffect } from "react";
+import Cookies from "universal-cookie";
 
 let logoutTimer: ReturnType<typeof setTimeout>;
 
+const cookies = new Cookies();
 export const useAuth = () => {
   const [token, setToken] = useState<string>(null);
   const [tokenExpirationDate, setTokenExpirationDate] = useState<Date>(null);
@@ -14,13 +16,14 @@ export const useAuth = () => {
       const tokenExpirationDate =
         expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
       setTokenExpirationDate(tokenExpirationDate);
-      localStorage.setItem(
+      cookies.set(
         "userData",
         JSON.stringify({
           userId: uid,
           token: token,
           expiration: tokenExpirationDate.toISOString(),
-        })
+        }),
+        { path: "/" }
       );
     },
     []
@@ -30,7 +33,8 @@ export const useAuth = () => {
     setToken(null);
     setTokenExpirationDate(null);
     setUserId(null);
-    localStorage.removeItem("userData");
+    cookies.remove("userData");
+    // localStorage.removeItem("userData");
   }, []);
 
   useEffect(() => {
@@ -44,7 +48,7 @@ export const useAuth = () => {
   }, [token, logout, tokenExpirationDate]);
 
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("userData"));
+    const storedData = cookies.get("userData");
     if (
       storedData &&
       storedData.token &&
