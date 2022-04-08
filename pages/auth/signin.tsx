@@ -38,6 +38,10 @@ const SigninPage: React.FC = () => {
     } else {
       setPageLoading(false);
     }
+
+    return () => {
+      setPageLoading(false);
+    };
   }, [router, token]);
 
   const [loading, setLoading] = useState<boolean>(false);

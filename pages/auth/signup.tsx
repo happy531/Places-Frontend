@@ -40,12 +40,16 @@ const SignupPage: React.FC = () => {
     } else {
       setPageLoading(false);
     }
+
+    return () => {
+      setPageLoading(false);
+    };
   }, [router, token]);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>(null);
-  const [selectedImage, setSelectedImage] = useState<File>(null);
 
+  const [selectedImage, setSelectedImage] = useState<File>(null);
   const {
     handleSubmit,
     control,
