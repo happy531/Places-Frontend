@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../hooks/auth-hook";
 import Head from "next/head";
 import Link from "next/link";
@@ -29,22 +29,8 @@ interface Inputs {
 }
 
 const SignupPage: React.FC = () => {
-  const [pageLoading, setPageLoading] = useState<boolean>(true);
   const router = useRouter();
-  const { token, login } = useAuth();
-
-  useEffect(() => {
-    setPageLoading(true);
-    if (token) {
-      router.replace("/");
-    } else {
-      setPageLoading(false);
-    }
-
-    return () => {
-      setPageLoading(false);
-    };
-  }, [router, token]);
+  const { login } = useAuth();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>(null);
@@ -86,142 +72,137 @@ const SignupPage: React.FC = () => {
         <title>Places - Signup</title>
         <meta name="Signup" content="Signup page" />
       </Head>
-      {pageLoading && <LoadingSpinner />}
-      {!pageLoading && (
-        <>
-          <Header />
-          <Container component="main" maxWidth="xs">
-            <Box
-              sx={{
-                width: 400,
-                marginTop: 5,
-                maxWidth: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
+      <Header />
+      <Container component="main" maxWidth="xs">
+        <Box
+          sx={{
+            width: 400,
+            marginTop: 5,
+            maxWidth: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          {errorMessage && (
+            <Alert severity="error" style={{ width: "100%", margin: 5 }}>
+              {errorMessage}
+            </Alert>
+          )}
+          <Box
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            sx={{ mt: 1 }}
+          >
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: "Enter a valid email address.",
+                pattern:
+                  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/, // email regex
               }}
-            >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Sign up
-              </Typography>
-              {errorMessage && (
-                <Alert severity="error" style={{ width: "100%", margin: 5 }}>
-                  {errorMessage}
-                </Alert>
-              )}
-              <Box
-                component="form"
-                onSubmit={handleSubmit(onSubmit)}
-                sx={{ mt: 1 }}
-              >
-                <Controller
-                  name="email"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: "Enter a valid email address.",
-                    pattern:
-                      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/, // email regex
-                  }}
-                  render={({ field }) => {
-                    return (
-                      <TextField
-                        {...field}
-                        // type="email"
-                        label="Email Address"
-                        error={!!errors.email}
-                        helperText={errors.email && errors.email.message}
-                        margin="normal"
-                        fullWidth
-                        autoComplete="email"
-                      />
-                    );
-                  }}
-                />
+              render={({ field }) => {
+                return (
+                  <TextField
+                    {...field}
+                    // type="email"
+                    label="Email Address"
+                    error={!!errors.email}
+                    helperText={errors.email && errors.email.message}
+                    margin="normal"
+                    fullWidth
+                    autoComplete="email"
+                  />
+                );
+              }}
+            />
 
-                <Controller
-                  name="name"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: "Enter a valid name." }}
-                  render={({ field }) => {
-                    return (
-                      <TextField
-                        {...field}
-                        type="name"
-                        label="Name"
-                        error={!!errors.name}
-                        helperText={errors.name && errors.name.message}
-                        margin="normal"
-                        fullWidth
-                        autoComplete="name"
-                      />
-                    );
-                  }}
-                />
+            <Controller
+              name="name"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Enter a valid name." }}
+              render={({ field }) => {
+                return (
+                  <TextField
+                    {...field}
+                    type="name"
+                    label="Name"
+                    error={!!errors.name}
+                    helperText={errors.name && errors.name.message}
+                    margin="normal"
+                    fullWidth
+                    autoComplete="name"
+                  />
+                );
+              }}
+            />
 
-                <Controller
-                  name="password"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: "Enter a valid password.",
-                    minLength: 5,
-                  }}
-                  render={({ field }) => {
-                    return (
-                      <TextField
-                        {...field}
-                        type="password"
-                        label="Password"
-                        error={!!errors.password}
-                        helperText={errors.password && errors.password.message}
-                        margin="normal"
-                        fullWidth
-                        autoComplete="password"
-                      />
-                    );
-                  }}
-                />
+            <Controller
+              name="password"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: "Enter a valid password.",
+                minLength: 5,
+              }}
+              render={({ field }) => {
+                return (
+                  <TextField
+                    {...field}
+                    type="password"
+                    label="Password"
+                    error={!!errors.password}
+                    helperText={errors.password && errors.password.message}
+                    margin="normal"
+                    fullWidth
+                    autoComplete="password"
+                  />
+                );
+              }}
+            />
 
-                <UploadImage
-                  selectedImage={selectedImage}
-                  onSetSelectedImage={setSelectedImage}
-                  isProfilePhoto={true}
-                />
+            <UploadImage
+              selectedImage={selectedImage}
+              onSetSelectedImage={setSelectedImage}
+              isProfilePhoto={true}
+            />
 
-                {!loading ? (
-                  <>
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      sx={{ mt: 3, mb: 2 }}
-                    >
-                      Sign up
+            {!loading ? (
+              <>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign up
+                </Button>
+                <Grid container>
+                  <Grid item>
+                    <Button>
+                      <Link href={"/auth/signin"}>
+                        Already have an account? Sign In
+                      </Link>
                     </Button>
-                    <Grid container>
-                      <Grid item>
-                        <Button>
-                          <Link href={"/auth/signin"}>
-                            Already have an account? Sign In
-                          </Link>
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </>
-                ) : (
-                  <LoadingSpinner />
-                )}
-              </Box>
-            </Box>
-          </Container>
-        </>
-      )}
+                  </Grid>
+                </Grid>
+              </>
+            ) : (
+              <LoadingSpinner />
+            )}
+          </Box>
+        </Box>
+      </Container>
     </>
   );
 };
