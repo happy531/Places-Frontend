@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../context/auth-context";
 import axios from "../../axios/axios";
@@ -10,8 +10,18 @@ import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 import Head from "next/head";
 
 const NewPlacePage: React.FC = () => {
+  const [pageLoading, setPageLoading] = useState<boolean>(true);
   const router = useRouter();
   const { token } = useContext(AuthContext);
+
+  useEffect(() => {
+    setPageLoading(true);
+    if (!token) {
+      router.replace("/");
+    } else {
+      setPageLoading(false);
+    }
+  }, [router, token]);
 
   const [selectedImage, setSelectedImage] = useState<File>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -41,80 +51,84 @@ const NewPlacePage: React.FC = () => {
 
       setLoading(false);
     } catch (err) {
-      console.log(err.message);
       setLoading(false);
     }
   };
 
   return (
     <>
+      {pageLoading && <LoadingSpinner />}
       <Head>
         <title>Places - Add new place</title>
         <meta name="add" content="Add new place" />
       </Head>
-      <Header />
-      <Container
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Box
-          component="form"
-          onSubmit={placeSubmitHandler}
-          sx={{
-            width: 500,
-            marginTop: 15,
-            maxWidth: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <TextField
-            inputRef={titleRef}
-            margin="normal"
-            required
-            fullWidth
-            id="title"
-            label="Title"
-            name="title"
-          />
-          <TextField
-            inputRef={descriptionRef}
-            margin="normal"
-            required
-            fullWidth
-            id="description"
-            label="Description"
-            name="description"
-          />
-          <UploadImage
-            selectedImage={selectedImage}
-            onSetSelectedImage={setSelectedImage}
-            width={500}
-            height={400}
-          />
-          <TextField
-            inputRef={addressRef}
-            margin="normal"
-            required
-            fullWidth
-            id="address"
-            label="Address"
-            name="address"
-          />
-          {!loading ? (
-            <Button variant="contained" type="submit" fullWidth>
-              POST
-            </Button>
-          ) : (
-            <LoadingSpinner />
-          )}
-        </Box>
-      </Container>
+      {!pageLoading && (
+        <>
+          <Header />
+          <Container
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Box
+              component="form"
+              onSubmit={placeSubmitHandler}
+              sx={{
+                width: 500,
+                marginTop: 15,
+                maxWidth: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <TextField
+                inputRef={titleRef}
+                margin="normal"
+                required
+                fullWidth
+                id="title"
+                label="Title"
+                name="title"
+              />
+              <TextField
+                inputRef={descriptionRef}
+                margin="normal"
+                required
+                fullWidth
+                id="description"
+                label="Description"
+                name="description"
+              />
+              <UploadImage
+                selectedImage={selectedImage}
+                onSetSelectedImage={setSelectedImage}
+                width={500}
+                height={400}
+              />
+              <TextField
+                inputRef={addressRef}
+                margin="normal"
+                required
+                fullWidth
+                id="address"
+                label="Address (its needed by the minimap)"
+                name="address"
+              />
+              {!loading ? (
+                <Button variant="contained" type="submit" fullWidth>
+                  POST
+                </Button>
+              ) : (
+                <LoadingSpinner />
+              )}
+            </Box>
+          </Container>
+        </>
+      )}
     </>
   );
 };

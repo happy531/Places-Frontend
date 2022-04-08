@@ -13,11 +13,11 @@ import {
 } from "@mui/material";
 
 import IfcPlaceItem from "../../../models/IfcPlaceItem";
-
-import classes from "./PlaceItem.module.scss";
 import ConfirmDeleteModal from "../../UI/Modals/ConfirmDeleteModal";
 import EditPlaceModal from "../../UI/Modals/EditPlaceModal";
 import MapModal from "../../UI/Modals/MapModal";
+
+import classes from "./PlaceItem.module.scss";
 
 const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
   const router = useRouter();
@@ -86,6 +86,11 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
             image={`${process.env.NEXT_PUBLIC_BACKEND_ASSET_URL}/${props.image}`}
             alt={props.title}
           />
+          <CardContent sx={{ flexGrow: 1 }}>
+            <Typography gutterBottom variant="h6" component="h2">
+              Image no longer available.
+            </Typography>
+          </CardContent>
           <CardContent sx={{ flexGrow: 1 }}>
             <Typography gutterBottom variant="h6" component="h2">
               {props.title}
