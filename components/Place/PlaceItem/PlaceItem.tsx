@@ -116,6 +116,9 @@ const PlaceItem: React.FC<IfcPlaceItem> = (props) => {
           </CardActions>
         </Card>
       </Grid>
+      <br />
+      <br />
+      <br />
     </>
   );
 };
