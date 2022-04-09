@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 // import axios from "../axios/axios";
 
 import Header from "../components/Header/Header";
@@ -8,9 +8,9 @@ import Footer from "../components/Footer/Footer";
 import PlacesList from "../components/Place/PlacesList/PlacesList";
 import Introduction from "../components/Introduction/Introduction";
 import PlaceError from "../components/UI/PlaceError/PlaceError";
+import { Container } from "@mui/material";
 
 import IfcPlaceItem from "../models/IfcPlaceItem";
-import { Container } from "@mui/material";
 
 interface Props {
   placesData: {
@@ -45,7 +45,7 @@ const Home: React.FC<Props> = ({ placesData }) => {
 
 export default Home;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   // const { data } = await axios.get("/places");
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/places`);
